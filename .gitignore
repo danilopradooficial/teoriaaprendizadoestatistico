@@ -1,0 +1,15 @@
+# Banco ANTAQ (~4,6 GB). Permanece só na máquina local; não sobe para o GitHub.
+DatasetMovimentacaoPortuaria/
+
+# Extração local dos PDFs (trabalho interno; não é entrega)
+_pdf_extract/
+
+# Artefatos do R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Sistema
+Thumbs.db
+Desktop.ini
+.DS_Store
