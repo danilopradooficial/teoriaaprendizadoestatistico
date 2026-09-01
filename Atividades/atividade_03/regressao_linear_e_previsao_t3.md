@@ -1,4 +1,4 @@
-# Atividade 03 - Regressão linear e previsão de T3
+# Atividade 03 - Regressão Linear e Previsão de T3
 
 **Teoria do Aprendizado Estatístico · Fatec Rubens Lara · Aula 04**
 
