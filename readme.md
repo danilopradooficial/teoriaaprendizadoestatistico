@@ -54,8 +54,8 @@ O Dataset de Dados Estatístico Aquaviário (ANTAQ ), recorte 2021-2025 está na
 | V     | Não supervisionado: agrupamento, EM, PCA/ICA      |
 
 
-As Aulas 01-04 abrem o **Bloco I** e o início do supervisionado:
-estimar \(f\), tipar dados, explorar, e o primeiro modelo - **regressão linear**.
+As Aulas 01-05 abrem o **Bloco I** e o início do supervisionado:
+estimar \(f\), tipar dados, explorar, regressão linear e regressão logística.
 
 ---
 
@@ -65,30 +65,37 @@ estimar \(f\), tipar dados, explorar, e o primeiro modelo - **regressão linear*
 .
 ├── README.md
 ├── Atividades/
-│   ├── atividade_01/dicionario_variaveis.md
+│   ├── atividade_01/
+│   │   └── dicionario_variaveis_amplo_completo.md
 │   ├── atividade_02/
-│   │   ├── analise_exploratoria_ampla_inicial/     # exploracao larga (rascunho)
-│   │   │   ├── analise_exploratoria_ampla_inicial.md
-│   │   │   ├── gerar_graficos.R
-│   │   │   └── graficos/                             # PNGs da ampla
-│   │   └── analise_exploratoria_segmentada_entrega/ # ENTREGA enxuta (tempos)
-│   │       ├── analise_exploratoria_segmentada_entrega.md
-│   │       ├── gerar_graficos.R
-│   │       └── graficos/
-│   └── atividade_03/
-│       ├── regressao_linear.md              # alinhada a 02B (tempos)
-│       ├── gerar_modelo.R
+│   │   ├── analise_exploratoria_ampla_completa.md      # exploracao larga (funil)
+│   │   ├── analise_exploratoria_segmentada_entrega.md  # ENTREGA enxuta (tempos)
+│   │   ├── modelo_graficos_analise_ampla.R
+│   │   ├── modelo_graficos_analise_segmentada.R
+│   │   └── graficos/
+│   │       ├── ampla/                                  # PNGs da exploracao larga
+│   │       └── segmentada/                             # PNGs da entrega (tempos)
+│   ├── atividade_03/
+│   │   ├── regressao_linear_e_previsao_t3.md
+│   │   ├── modelo_regressao_linear_t3.R
+│   │   ├── modelo_previsao_fila_t3.R
+│   │   └── graficos/
+│   └── atividade_04/
+│       ├── regressao_logistica.md
+│       ├── modelo_regressao_logistica.R
 │       └── graficos/
 ├── MateriaisAulas/
-│   ├── Aula 01 ... Aula 04
+│   ├── Aula 01 ... Aula 05
 └── DatasetMovimentacaoPortuaria/         # LOCAL E GOOGLE DRIVE - fora do Git
 ```
 
 - Teoria: [MateriaisAulas/](MateriaisAulas)
 - Entregas: [Atividades/](Atividades)
-- Na Atividade 02, a entrega oficial para o professor e a pasta
-  `analise_exploratoria_segmentada_entrega/` (tempos). A pasta
-  `analise_exploratoria_ampla_inicial/` guarda a exploracao ampla inicial (funil).
+- Na Atividade 02, a entrega oficial e
+  `analise_exploratoria_segmentada_entrega.md` (tempos). A exploracao ampla
+  fica em `analise_exploratoria_ampla_completa.md` (funil).
+- Na Atividade 03, `regressao_linear_e_previsao_t3.md` traz a regressão de T3
+  (peso + TEU) e a previsão para navios em T1/T2.
 
 ---
 
@@ -102,10 +109,11 @@ conteúdo **extra** para o semestre.
 | #   | Entrega | Aula | Pedido do PDF | Status |
 | --- | --- | --- | --- | --- |
 | -   | *(em sala)* | [Aula 01](MateriaisAulas/Aula%2001%20-%20Introdução%20ao%20Aprendizado%20Estatístico.PDF) | Exercícios + lab de polinômios | Sem pasta no repo |
-| 01  | [dicionario_variaveis.md](Atividades/atividade_01/dicionario_variaveis.md) | [Aula 02](MateriaisAulas/Aula%2002%20-%20Dados%20e%20Variáveis.PDF) | Dicionário do banco; pacote **base** | Entregue |
-| 02A | [ampla inicial](Atividades/atividade_02/analise_exploratoria_ampla_inicial/analise_exploratoria_ampla_inicial.md) | [Aula 03](MateriaisAulas/Aula%2003%20-%20Análise%20Exploratória%20e%20Variáveis%20Aleatórias.PDF) | Exploracao larga (rascunho / funil) | Mantida |
-| 02B | [segmentada entrega](Atividades/atividade_02/analise_exploratoria_segmentada_entrega/analise_exploratoria_segmentada_entrega.md) | [Aula 03](MateriaisAulas/Aula%2003%20-%20Análise%20Exploratória%20e%20Variáveis%20Aleatórias.PDF) | *2 graficos + frase da forma* - foco **tempos T1-T4** | Entregue |
-| 03  | [regressao_linear.md](Atividades/atividade_03/regressao_linear.md) | [Aula 04](MateriaisAulas/Aula%2004%20-%20Regressão%20Linear.PDF) | Modelo, coeficiente, \(R^2\), residuos - alinhada a **02B** | Entregue |
+| 01  | [dicionario_variaveis_amplo_completo.md](Atividades/atividade_01/dicionario_variaveis_amplo_completo.md) | [Aula 02](MateriaisAulas/Aula%2002%20-%20Dados%20e%20Variáveis.PDF) | Dicionário do banco; pacote **base** | Entregue |
+| 02A | [ampla completa](Atividades/atividade_02/analise_exploratoria_ampla_completa.md) | [Aula 03](MateriaisAulas/Aula%2003%20-%20Análise%20Exploratória%20e%20Variáveis%20Aleatórias.PDF) | Exploracao larga (rascunho / funil) | Mantida |
+| 02B | [segmentada entrega](Atividades/atividade_02/analise_exploratoria_segmentada_entrega.md) | [Aula 03](MateriaisAulas/Aula%2003%20-%20Análise%20Exploratória%20e%20Variáveis%20Aleatórias.PDF) | *2 graficos + frase da forma* - foco **tempos T1-T4** | Entregue |
+| 03  | [regressao_linear_e_previsao_t3.md](Atividades/atividade_03/regressao_linear_e_previsao_t3.md) | [Aula 04](MateriaisAulas/Aula%2004%20-%20Regressão%20Linear.PDF) | T3 ~ peso+TEU; previsao na fila (T1/T2) | Entregue |
+| 04  | [regressao_logistica.md](Atividades/atividade_04/regressao_logistica.md) | [Aula 05](MateriaisAulas/Aula%2005%20-%20Classificação%20e%20Regressão%20Logística.PDF) | Y binario (T3 > 30 h), sigmoide, log-odds, odds - funil T3 | Entregue |
 
 
 ### Sequência no material
@@ -123,10 +131,13 @@ Ativ 02A (Aula 03)      EDA ampla (rascunho) --> achado: tempos do navio
 Ativ 02B (Aula 03)      EDA segmentada ENTREGA: so T1, T2, T3, T4 (+ TA/TE)
         |
         v
-Ativ 03 (Aula 04)       Regressao linear de T3 (alinhada a 02B)
+Ativ 03 (Aula 04)       Regressao T3 ~ peso+TEU; previsao para T1/T2
         |
         v
-…                       Classificacao / regressao logistica
+Ativ 04 (Aula 05)       Regressao logistica: P(T3 > 30 h | peso + TEU)
+        |
+        v
+…                       Matriz de confusao, KNN, ...
 ```
 
 
@@ -134,7 +145,8 @@ Ativ 03 (Aula 04)       Regressao linear de T3 (alinhada a 02B)
 | --- | --- | --- |
 | Ativ 02A | Ativ 02B | Funil: da exploracao larga para o recorte de tempos |
 | Ativ 02B | Ativ 03 | Assimetria de T3 e foco em operacao guiam o `lm` |
-| Ativ 03 | logistica | Y quantitativo ⇒ regressao; Y qualitativo ⇒ classificacao |
+| Ativ 03 | Ativ 04 | Y quantitativo (T3) ⇒ regressao; Y binario ⇒ logistica |
+| Ativ 04 | confusao / KNN | Probabilidade vira classe com limiar |
 
 
 ---
@@ -157,21 +169,27 @@ só porque o dump tem ~4,6 GB; a tipagem e os resumos seguem a base.
 
 ### Atividade 02 × Aula 03 (funil)
 
-**02A - ampla inicial (mantida).** Exploracao larga do ANTAQ (inventario,
+**02A - ampla completa (mantida).** Exploracao larga do ANTAQ (inventario,
 carga, geografia, Santos…). Serviu para achar o tema. Graficos em
-`analise_exploratoria_ampla_inicial/graficos/`.
+`Atividades/atividade_02/graficos/ampla/`.
 
 **02B - segmentada (entrega).** So **tempos** T1-T4 (e TA/TE) em Santos 2024,
 movimentacao de carga. Cumpre o lab da Aula 03 (hist+normal, boxplot por
 grupo, frase da forma, faltantes) em texto enxuto.
 Arquivo:
-[analise_exploratoria_segmentada_entrega.md](Atividades/atividade_02/analise_exploratoria_segmentada_entrega/analise_exploratoria_segmentada_entrega.md).
+[analise_exploratoria_segmentada_entrega.md](Atividades/atividade_02/analise_exploratoria_segmentada_entrega.md).
 
 ### Atividade 03 × Aula 04
 
-Alinhada a **02B**: Y = tempo de operacao (T3) em Santos; preditores peso,
-TEU e longo curso; correlacao entre preditores; residuos; previsao.
-Arquivo: [regressao_linear.md](Atividades/atividade_03/regressao_linear.md).
+Um unico arquivo: [regressao_linear_e_previsao_t3.md](Atividades/atividade_03/regressao_linear_e_previsao_t3.md).
+Regressão de T3 com tonelagem e TEU; mesma reta aplicada a navios em T1/T2.
+
+### Atividade 04 × Aula 05
+
+Fecha o funil em T3: Y binario (T3 > 30 h), mesmos preditores da Atividade 03
+(`log1p(peso)` + `log1p(teu)`), curva sigmoide de **P(y=1|x)**, painel reta
+log-odds → curva e contas de **odds** no peso mediano.
+Arquivo: [regressao_logistica.md](Atividades/atividade_04/regressao_logistica.md).
 
 ---
 
@@ -185,7 +203,19 @@ Origem: [Estatístico Aquaviário](https://web.antaq.gov.br/) (ANTAQ / SDP).
 Dados abertos - citar a ANTAQ em qualquer produto da disciplina.
 
 Documentação (tipos, joins, flags, fluxo em R):
-[dicionário de variáveis](Atividades/atividade_01/dicionario_variaveis.md).
+[dicionário de variáveis](Atividades/atividade_01/dicionario_variaveis_amplo_completo.md).
+
+### Como reproduzir os gráficos e números
+
+Na raiz do repositório, com `DatasetMovimentacaoPortuaria/` disponível:
+
+```r
+Rscript Atividades/atividade_02/modelo_graficos_analise_ampla.R
+Rscript Atividades/atividade_02/modelo_graficos_analise_segmentada.R
+Rscript Atividades/atividade_03/modelo_regressao_linear_t3.R
+Rscript Atividades/atividade_03/modelo_previsao_fila_t3.R
+Rscript Atividades/atividade_04/modelo_regressao_logistica.R
+```
 
 ```r
 library(data.table)

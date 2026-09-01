@@ -1,7 +1,7 @@
 # Graficos da exploracao AMPLA (Atividade 02A).
 # Na raiz:
-#   Rscript Atividades/atividade_02/analise_exploratoria_ampla_inicial/gerar_graficos.R
-# PNGs em .../analise_exploratoria_ampla_inicial/graficos/
+#   Rscript Atividades/atividade_02/modelo_graficos_analise_ampla.R
+# PNGs em Atividades/atividade_02/graficos/ampla/
 
 user_lib <- file.path(Sys.getenv("USERPROFILE"), "Documents", "R", "win-library", "4.6")
 dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
@@ -13,15 +13,14 @@ library(data.table)
 
 root <- if (file.exists("DatasetMovimentacaoPortuaria")) {
   "."
-} else if (file.exists(file.path("..", "..", "..", "DatasetMovimentacaoPortuaria"))) {
-  file.path("..", "..", "..")
+} else if (file.exists(file.path("..", "..", "DatasetMovimentacaoPortuaria"))) {
+  file.path("..", "..")
 } else {
   stop("Rode na raiz do repositorio.")
 }
 setwd(root)
 
-out_dir <- file.path("Atividades", "atividade_02",
-                     "analise_exploratoria_ampla_inicial", "graficos")
+out_dir <- file.path("Atividades", "atividade_02", "graficos", "ampla")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 # remove PNGs antigos da galeria 03-12 (nomes antigos e novos)

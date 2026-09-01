@@ -35,7 +35,7 @@ Para cada variável, a Aula 02 pede duas perguntas que não se misturam:
 
 - [Aula 02 - Dados e Variáveis](../../MateriaisAulas/Aula%2002%20-%20Dados%20e%20Variáveis.PDF)
 - [Aula 01 - Introdução ao Aprendizado Estatístico](../../MateriaisAulas/Aula%2001%20-%20Introdução%20ao%20Aprendizado%20Estatístico.PDF)
-- [README da disciplina](../../README.md)
+- [README da disciplina](../../readme.md)
 
 O banco em si (`DatasetMovimentacaoPortuaria/`) fica só na máquina local
 e não entra no GitHub.
@@ -587,8 +587,10 @@ Há dois conceitos que **não** devem ser misturados:
 TeoriaAprendizadoEstatistico/
 ├── README.md                              # visão geral da disciplina
 ├── Atividades/
-│   ├── atividade_01/dicionario_variaveis.md
-│   └── atividade_02/analise_exploratoria.md
+│   ├── atividade_01/dicionario_variaveis_amplo_completo.md
+│   ├── atividade_02/
+│   ├── atividade_03/
+│   └── atividade_04/
 ├── MateriaisAulas/                        # PDFs da disciplina
 └── DatasetMovimentacaoPortuaria/          # LOCAL - não vai para o GitHub
     ├── 2021/ … 2025/                      # tabelas fato, um diretório por ano
@@ -1362,12 +1364,16 @@ Estratificar por `Complexo Portuário` e `Mes` se o interesse for representar o 
 TeoriaAprendizadoEstatistico/
 ├── README.md
 ├── Atividades/
-│   ├── atividade_01/dicionario_variaveis.md
-│   └── atividade_02/analise_exploratoria.md
+│   ├── atividade_01/dicionario_variaveis_amplo_completo.md
+│   ├── atividade_02/
+│   ├── atividade_03/
+│   └── atividade_04/
 ├── MateriaisAulas/
 │   ├── Aula 01 - Introdução ao Aprendizado Estatístico.PDF
 │   ├── Aula 02 - Dados e Variáveis.PDF
-│   └── Aula 03 - Análise Exploratória e Variáveis Aleatórias.PDF
+│   ├── Aula 03 - Análise Exploratória e Variáveis Aleatórias.PDF
+│   ├── Aula 04 - Regressão Linear.PDF
+│   └── Aula 05 - Classificação e Regressão Logística.PDF
 └── DatasetMovimentacaoPortuaria/          # LOCAL - ~4,61 GB, fora do Git
     ├── Relacionamentos/
     │   └── modelo_dados.png             # ER oficial ANTAQ, abr/2025

@@ -1,0 +1,26 @@
+n=5681
+corte_T3_h=30
+med_T3=30.05
+prop_op_longa=0.500088
+x0_log_peso=10.09759
+peso_med=24283.46
+
+=== PERGUNTA 1: modelo simples y ~ log_peso ===
+(Intercept)    log_peso 
+ -8.5237423   0.8589374 
+P0=0.5372948 odds=1.161203 logit=0.1494567
+
+=== PERGUNTA 1: modelo multiplo y ~ log_peso + log_teu ===
+(Intercept)    log_peso     log_teu 
+  -9.132965    1.040935   -0.373358 
+                         nome   peso_t     teu         p       odds
+     Granel mediano (sem TEU) 24283.46    0.00 0.7986646 3.96683560
+25% Conteiner leve (P25 peso) 11361.98 2940.75 0.0835918 0.09121677
+90%       Escala pesada (P90) 66395.65 3003.00 0.3624404 0.56848081
+
+=== PERGUNTA 2: grupos T1 / T2 (mesma glm) ===
+med_T1=28.38333 med_T2=2.266667
+             grupo     n  prop_obs p_hat_med p_hat_mean
+            <char> <int>     <num>     <num>      <num>
+1:  T1 alto (fila)  2802 0.6056388 0.7642226  0.5932048
+2: T2 alto (berco)  2501 0.5229908 0.6845034  0.5463410

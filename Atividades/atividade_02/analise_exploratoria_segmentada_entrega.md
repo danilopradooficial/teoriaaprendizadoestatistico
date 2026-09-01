@@ -6,9 +6,9 @@ Esta é a versão **enxuta** da EDA, a que apresentamos como entrega principal
 da Aula 03. O foco é só um: os **tempos do navio** no porto de Santos
 (espera, atracação, operação e desatracação).
 
-A exploração larga do banco (carga, geografia, inventário etc.) ficou na
-pasta A, como rascunho inicial:
-[análise ampla](../analise_exploratoria_ampla_inicial/analise_exploratoria_ampla_inicial.md).
+A exploração larga do banco (carga, geografia, inventário etc.) ficou no
+arquivo da ampla, como rascunho inicial:
+[análise ampla](analise_exploratoria_ampla_completa.md).
 Foi nela que vimos que os tempos mereciam um estudo à parte. Aqui
 fechamos o funil.
 
@@ -42,10 +42,10 @@ Isso importa antes de qualquer regressão (Atividade 03).
 - \(n = 5.739\) escalas com tempo de operação (T3) preenchido
 
 Leitura em R: `sep = ";"`, `dec = ","`. Script dos gráficos:
-[`gerar_graficos.R`](gerar_graficos.R).
+[`modelo_graficos_analise_segmentada.R`](modelo_graficos_analise_segmentada.R).
 
 Material da aula:
-[Aula 03](../../../MateriaisAulas/Aula%2003%20-%20Análise%20Exploratória%20e%20Variáveis%20Aleatórias.PDF).
+[Aula 03](../../MateriaisAulas/Aula%2003%20-%20Análise%20Exploratória%20e%20Variáveis%20Aleatórias.PDF).
 
 ---
 
@@ -64,7 +64,7 @@ extremos puxam a média para cima.
 | TA (tempo no cais) | 39,3 | 51,6 | 131,6 | 0,1 |
 | TE (estadia total) | 84,1 | 137,5 | 450,7 | 1,3 |
 
-![Medianas dos tempos](graficos/04_medianas_tempos.png)
+![Medianas dos tempos](graficos/segmentada/04_medianas_tempos.png)
 
 **O que isso diz.** Em Santos, o navio “do meio” gasta cerca de **um dia e
 meio** na fila (T1 ≈ 28 h) e cerca de **um dia e quarto** operando (T3 ≈ 30 h).
@@ -89,7 +89,7 @@ hist(T3_cap, breaks = 40, prob = TRUE)
 curve(dnorm(x, mean = mean(T3_cap), sd = sd(T3_cap)), add = TRUE)
 ```
 
-![Histograma de T3 com curva normal](graficos/01_t3_hist_normal.png)
+![Histograma de T3 com curva normal](graficos/segmentada/01_t3_hist_normal.png)
 
 **Comentário.** A massa fica concentrada em tempos menores e existe uma
 cauda longa à direita. A curva normal (mesma média e desvio) não acompanha
@@ -105,7 +105,7 @@ Isso já avisa a Atividade 03: trabalhar T3 “cru” em um `lm` sem transformar
 Também pedimos o boxplot da mesma variável, agora separado por tipo de
 viagem (relação entre duas variáveis):
 
-![T3 por tipo de viagem](graficos/02_t3_por_navegacao.png)
+![T3 por tipo de viagem](graficos/segmentada/02_t3_por_navegacao.png)
 
 **Comentário.** O tempo de operação muda conforme o tipo de navegação
 (longo curso, cabotagem etc.). Misturar tudo como se fosse a mesma coisa
@@ -115,7 +115,7 @@ esconde regimes diferentes.
 
 ## 3. Os quatro pedaços juntos (T1 a T4)
 
-![Boxplots T1 T2 T3 T4](graficos/03_quatro_tempos_boxplot.png)
+![Boxplots T1 T2 T3 T4](graficos/segmentada/03_quatro_tempos_boxplot.png)
 
 No desenho (sem os extremos mais absurdos), T1 e T3 dominam a história.
 T2 e T4 são “tempos de transição”. Quem quiser reduzir atraso no porto
@@ -125,7 +125,7 @@ precisa olhar **fila (T1)** e **operação (T3)**; não só um deles.
 
 ## 4. A fila antes de atracar (T1)
 
-![Histograma de T1](graficos/05_t1_hist_fila.png)
+![Histograma de T1](graficos/segmentada/05_t1_hist_fila.png)
 
 T1 também é assimétrico: muitos navios esperam pouco ou moderado, e uma
 minoria espera muitos dias (P95 perto de 16 dias). Fila não é um atraso

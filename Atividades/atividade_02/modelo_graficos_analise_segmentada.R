@@ -1,6 +1,7 @@
 # Graficos da EDA SEGMENTADA (Atividade 02B) - so tempos T1..T4, TA, TE.
 # Na raiz:
-#   Rscript Atividades/atividade_02/analise_exploratoria_segmentada_entrega/gerar_graficos.R
+#   Rscript Atividades/atividade_02/modelo_graficos_analise_segmentada.R
+# PNGs em Atividades/atividade_02/graficos/segmentada/
 
 user_lib <- file.path(Sys.getenv("USERPROFILE"), "Documents", "R", "win-library", "4.6")
 dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
@@ -12,13 +13,12 @@ library(data.table)
 
 root <- if (file.exists("DatasetMovimentacaoPortuaria")) {
   "."
-} else if (file.exists(file.path("..", "..", "..", "DatasetMovimentacaoPortuaria"))) {
-  file.path("..", "..", "..")
+} else if (file.exists(file.path("..", "..", "DatasetMovimentacaoPortuaria"))) {
+  file.path("..", "..")
 } else stop("Rode na raiz do repositorio.")
 setwd(root)
 
-out_dir <- file.path("Atividades", "atividade_02",
-                     "analise_exploratoria_segmentada_entrega", "graficos")
+out_dir <- file.path("Atividades", "atividade_02", "graficos", "segmentada")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 salvar <- function(nome, expr, mar = c(4.5, 4.5, 3.2, 1.2)) {
@@ -130,7 +130,7 @@ salvar("05_t1_hist_fila.png", {
 })
 
 # numeros
-sink(file.path(dirname(out_dir), "_numeros.txt"))
+sink(file.path("Atividades", "atividade_02", "_numeros.txt"))
 cat("n=", nrow(mc), "\n", sep = "")
 for (cl in c("T1", "T2", "T3", "T4", "TA", "TE")) {
   x <- mc[[cl]]
