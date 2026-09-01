@@ -2,7 +2,7 @@
 
 **Teoria do Aprendizado Estatístico · Fatec Rubens Lara · Aula 04**
 
-Continua a EDA segmentada em Santos:
+Continua a Análise Exploratória segmentada em Santos:
 [02B](../atividade_02/analise_exploratoria_segmentada_entrega.md).
 
 Primeiro ajustamos uma regressão para explicar o tempo de operação (T3) com
@@ -98,7 +98,7 @@ m_multi <- lm(log1p(T3) ~ log1p(peso) + log1p(teu), data = esc_m)
 | Só tonelagem | 0,26 |
 | Tonelagem + TEU | 0,51 |
 
-Incluir TEU ajuda bastante, mas metade da variação ainda fica de fora. A EDA
+Incluir TEU ajuda bastante, mas metade da variação ainda fica de fora. A Análise Exploratória
 (02B) já tinha mostrado cauda longa.
 
 ![Resíduos vs ajustados](graficos/03_residuos_vs_ajustados.png)

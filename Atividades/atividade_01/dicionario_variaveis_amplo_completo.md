@@ -59,7 +59,7 @@ tirar média é erro. Pacote do laboratório: **base** (`str`, `summary`,
 11,7 milhões de partidas, 68 milhões de linhas de conteúdo de contêiner.
 Misturar níveis sem agregar quebra qualquer \(f\).
 
-A Atividade 02 parte daqui: com os tipos certos, a EDA mede qualidade,
+A Atividade 02 parte daqui: com os tipos certos, a Análise Exploratória mede qualidade,
 típico versus extremo e o que **não** é i.i.d.
 
 ---
@@ -1299,7 +1299,7 @@ Isso reduz o problema a dezenas de milhares de escalas - adequado para `lm`/`glm
 
 ## 16. Fluxo sugerido de trabalho em R
 
-1. Ler **somente** `Atracacao` + `TemposAtracacao` de **um** ano. EDA de tempos, tipos de operação e complexos (`summary`, histogramas em log, `table`).
+1. Ler **somente** `Atracacao` + `TemposAtracacao` de **um** ano. Análise Exploratória de tempos, tipos de operação e complexos (`summary`, histogramas em log, `table`).
 2. Filtrar `FlagMCOperacaoAtracacao == 1`.
 3. Ler `Carga` do mesmo ano; filtrar `FlagMCOperacaoCarga == 1`; agregar por `IDAtracacao` (peso, TEU, natureza modal, sentido).
 4. `merge` na escala. Checar identidades TA = T2+T3+T4 e TE = T1+…+T4.

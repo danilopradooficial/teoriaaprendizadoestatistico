@@ -125,10 +125,10 @@ Aula 01                 Estimar f; predicao × inferencia; vies-variancia
 Ativ 01 (Aula 02)       Dicionario + tipos
         |
         v
-Ativ 02A (Aula 03)      EDA ampla (rascunho) --> achado: tempos do navio
+Ativ 02A (Aula 03)      Análise Exploratória ampla (rascunho) --> achado: tempos do navio
         |
         v
-Ativ 02B (Aula 03)      EDA segmentada ENTREGA: so T1, T2, T3, T4 (+ TA/TE)
+Ativ 02B (Aula 03)      Análise Exploratória segmentada ENTREGA: so T1, T2, T3, T4 (+ TA/TE)
         |
         v
 Ativ 03 (Aula 04)       Regressao T3 ~ peso+TEU; previsao para T1/T2

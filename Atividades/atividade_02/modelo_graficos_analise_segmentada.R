@@ -1,4 +1,4 @@
-# Graficos da EDA SEGMENTADA (Atividade 02B) - so tempos T1..T4, TA, TE.
+# Graficos da Análise Exploratória segmentada (Atividade 02B) - so tempos T1..T4, TA, TE.
 # Na raiz:
 #   Rscript Atividades/atividade_02/modelo_graficos_analise_segmentada.R
 # PNGs em Atividades/atividade_02/graficos/segmentada/

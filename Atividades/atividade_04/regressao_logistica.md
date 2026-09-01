@@ -17,8 +17,8 @@ Script: `[modelo_regressao_logistica.R](modelo_regressao_logistica.R)`.
 | #   | Etapa            | O que fizemos                                                                                                                                                                         |
 | --- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 01  | Base inteira     | [Dicionário](../atividade_01/dicionario_variaveis_amplo_completo.md): tipos, joins, unidade amostral                                                                                  |
-| 02A | Exploração ampla | [EDA larga](../atividade_02/analise_exploratoria_ampla_completa.md): inventário, carga, geografia                                                                                     |
-| 02B | Tempos do navio  | [EDA segmentada](../atividade_02/analise_exploratoria_segmentada_entrega.md): T1, T2, **T3**, T4                                                                                      |
+| 02A | Exploração ampla | [Análise Exploratória larga](../atividade_02/analise_exploratoria_ampla_completa.md): inventário, carga, geografia                                                                                     |
+| 02B | Tempos do navio  | [Análise Exploratória segmentada](../atividade_02/analise_exploratoria_segmentada_entrega.md): T1, T2, **T3**, T4                                                                                      |
 | 03  | Só T3 (contínuo) | [Regressão T3 ~ peso + TEU](../atividade_03/regressao_linear_e_previsao_t3.md#regressao-t3); [Previsão T3 em T1/T2](../atividade_03/regressao_linear_e_previsao_t3.md#previsao-t1-t2) |
 | 04  | Só T3 (binário)  | **Esta entrega**: [duas perguntas](#as-duas-perguntas) em sim/não                                                                                                                     |
 

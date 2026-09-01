@@ -32,7 +32,7 @@ Este arquivo fica como memória da exploração larga.
 ## Sobre a atividade
 
 Segunda entrega sobre o banco: cumprir o laboratório da **Aula 03**
-(EDA + variáveis aleatórias), com a régua da Aula 02 (o tipo da variável
+(Análise Exploratória + variáveis aleatórias), com a régua da Aula 02 (o tipo da variável
 decide o resumo e o gráfico).
 
 Antes de qualquer modelo (\(Y = f(X)+\varepsilon\)):
@@ -48,7 +48,7 @@ Antes de qualquer modelo (\(Y = f(X)+\varepsilon\)):
 
 > **Meta:** cumprir o pedido do PDF - 2 gráficos quadrados comentados +
 > uma frase sobre a forma da distribuição - e, de quebra, deixar claro o
-> que essa EDA **proíbe** na hora de estimar \(f\).
+> que essa Análise Exploratória **proíbe** na hora de estimar \(f\).
 
 ---
 
@@ -64,7 +64,7 @@ Números calculados sobre os microdados **locais** (não versionados), com
 
 ---
 
-Documento de **estatística descritiva** do banco escolhido para o trabalho da disciplina. Cumpre a Aula 03 (EDA no R + variáveis aleatórias) com a régua da Aula 02 (tipo decide o resumo e o gráfico).
+Documento de **estatística descritiva** do banco escolhido para o trabalho da disciplina. Cumpre a Aula 03 (Análise Exploratória no R + variáveis aleatórias) com a régua da Aula 02 (tipo decide o resumo e o gráfico).
 
 Os números abaixo foram calculados sobre **todos** os microdados locais (não sobre amostra), com `sep = ";"`, `dec = ","`. Totais de peso usam `FlagMCOperacaoCarga == 1`, salvo indicação. Identidades de tempo: `TAtracado = T2+T3+T4` e `TEstadia = T1+…+T4` (erro mediano da ordem de \(10^{-13}\) h).
 
@@ -78,7 +78,7 @@ O PDF pede, no banco do trabalho:
 
 | Pedido do PDF | Neste arquivo |
 |---|---|
-| EDA de **uma** quantitativa: `summary`, `sd(..., na.rm = TRUE)`, `hist(..., prob = TRUE)`, `boxplot` com `par(pty = "s")` | Seções 5 e 8.1 |
+| Análise Exploratória de **uma** quantitativa: `summary`, `sd(..., na.rm = TRUE)`, `hist(..., prob = TRUE)`, `boxplot` com `par(pty = "s")` | Seções 5 e 8.1 |
 | Relação entre **duas** variáveis (`plot` ou `boxplot(y ~ grupo)`) | Seção 8.2 |
 | Sobrepor `dnorm` a uma contínua | Seção 8.1 |
 | Contar faltantes: `colSums(is.na(...))` | Seção 3 (+ trecho em 8.6) |
@@ -89,7 +89,7 @@ O restante do `.md` (inventário, hierarquia, implicações para \(f\)) é **ext
 
 ---
 
-## 1. Perguntas que a EDA responde
+## 1. Perguntas que a Análise Exploratória responde
 
 Antes de qualquer modelo (Aula 01: \(Y = f(X)+\varepsilon\)):
 
@@ -101,7 +101,7 @@ Antes de qualquer modelo (Aula 01: \(Y = f(X)+\varepsilon\)):
 6. Que \(Y\) e que \(X\) são defensáveis **sem vazamento**?
 7. Qual a **forma** de uma contínua - e qual distribuição teórica ela lembra?
 
-Esta EDA não escolhe o modelo; ela **proíbe** escolhas ingênuas.
+Esta Análise Exploratória não escolhe o modelo; ela **proíbe** escolhas ingênuas.
 
 ---
 
@@ -489,7 +489,7 @@ Recorte: **`Complexo Portuário == "Santos"`**, 2024. Em números: **6.292** esc
 T1 mediano ≈ **28,4 h** (fila relevante).
 
 Os gráficos 01-02 cumprem o PDF no Brasil. Os 10 abaixo contam a história
-operacional de Santos (tipos variados + alinhados à EDA: assimetria, hierarquia,
+operacional de Santos (tipos variados + alinhados à Análise Exploratória: assimetria, hierarquia,
 navegação × tonelagem, sazonalidade).
 
 | # | Arquivo | Tipo | Insight |
@@ -508,17 +508,17 @@ navegação × tonelagem, sazonalidade).
 ![Santos - escalas por mês](graficos/ampla/03_santos_escalas_mes.png)
 
 **03.** Escalas relativamente estáveis no ano (linha + média tracejada). O pulso de
-Santos é comercial, não hidrológico como no Norte da EDA nacional.
+Santos é comercial, não hidrológico como no Norte da Análise Exploratória nacional.
 
 ![Santos - navegação](graficos/ampla/04_santos_navegacao.png)
 
 **04.** Nas escalas de carga, **longo curso** domina; cabotagem é secundária.
-Casa com a EDA: tonelagem de Santos é comércio exterior.
+Casa com a Análise Exploratória: tonelagem de Santos é comércio exterior.
 
 ![Santos - T3 por navegação](graficos/ampla/05_santos_t3_navegacao.png)
 
 **05.** T3 muda com a navegação. Misturar longo curso e cabotagem num único `lm`
-sem estratificar é o erro que a EDA proíbe (não i.i.d.).
+sem estratificar é o erro que a Análise Exploratória proíbe (não i.i.d.).
 
 ![Santos - top berços](graficos/ampla/06_santos_top_bercos.png)
 
@@ -528,7 +528,7 @@ não só "o porto" como bloco homogêneo.
 ![Santos - peso por natureza](graficos/ampla/07_santos_peso_natureza.png)
 
 **07.** Em toneladas, **granel sólido** lidera; contêiner é forte em TEU/linhas, mas
-não em Mt. Contar partidas ≠ contar peso (mesma leitura da EDA, agora em Santos).
+não em Mt. Contar partidas ≠ contar peso (mesma leitura da Análise Exploratória, agora em Santos).
 
 ![Santos - sentido do peso](graficos/ampla/08_santos_sentido_peso.png)
 
@@ -548,7 +548,7 @@ Bom candidato a \(Y=\log1p(T3)\) com \(\log1p(\text{peso})\) como \(X\).
 ![Santos - fila T1 no ano](graficos/ampla/11_santos_fila_mes.png)
 
 **11.** Mediana e P90 de T1 (espera) no calendário. Mediana = navio típico; P90 =
-regime de congestionamento (como na EDA nacional: média/P90 ≠ mediana).
+regime de congestionamento (como na Análise Exploratória nacional: média/P90 ≠ mediana).
 
 ![Santos - mês × navegação](graficos/ampla/12_santos_mes_navegacao.png)
 
@@ -582,7 +582,7 @@ Detalhe por campo no quinquênio: seção 3.
 
 ## 9. Implicações para estimar \(f\) (Aula 01)
 
-| Escolha | Evidência nesta EDA | Consequência |
+| Escolha | Evidência nesta Análise Exploratória | Consequência |
 |---|---|---|
 | Unidade = partida de carga | 28 partidas/escala; 82% das linhas são contêiner de ~11 t | \(Y\) = peso é quase um modelo de granel disfarçado; cluster-robust ou agregar |
 | Unidade = escala de movimentação | 359 mil escalas de carga; T3 mediano 8,7 h, cauda pesada | Melhor \(n\) para regressão de tempos; filtrar tipo de operação (flag MC da atracação é inútil aqui) |
@@ -595,7 +595,7 @@ Detalhe por campo no quinquênio: seção 3.
 | Ocupação | 60% zeros, 19% uns | não é gaussiana; agregue berço-mês ou use defasagem |
 | i.i.d. | porto, mês, escala | blocked CV; *hold-out* temporal |
 
-**Resposta quantitativa ⇒ regressão; qualitativa ⇒ classificação** (Aula 02). Neste banco as duas convivem: declare \(Y\) **depois** desta EDA, não antes.
+**Resposta quantitativa ⇒ regressão; qualitativa ⇒ classificação** (Aula 02). Neste banco as duas convivem: declare \(Y\) **depois** desta Análise Exploratória, não antes.
 
 ---
 
@@ -617,7 +617,7 @@ Isso cabe em um script R, respeita tipos, flags e vazamento, e ainda deixa um re
 
 ## 11. Como reproduzir (R)
 
-Toda a EDA desta entrega foi feita em **R** (`data.table::fread` + base). Na raiz do repositório:
+Toda a Análise Exploratória desta entrega foi feita em **R** (`data.table::fread` + base). Na raiz do repositório:
 
 ```r
 library(data.table)
@@ -647,4 +647,4 @@ O dump ANTAQ 2021-2025 contém 481 mil escalas (1:1 com tempos), 11,7 milhões d
 
 ---
 
-*Cálculos sobre o repositório local (EDA em R, 2026-08-24). Se o dump mudar, refazer as tabelas de \(n\) e de peso - os mecanismos (assimetria, flags, hierarquia) devem permanecer.*
+*Cálculos sobre o repositório local (Análise Exploratória em R, 2026-08-24). Se o dump mudar, refazer as tabelas de \(n\) e de peso - os mecanismos (assimetria, flags, hierarquia) devem permanecer.*

@@ -2,7 +2,7 @@
 
 **Teoria do Aprendizado Estatístico · Fatec Rubens Lara**
 
-Esta é a versão **enxuta** da EDA, a que apresentamos como entrega principal
+Esta é a versão **enxuta** da Análise Exploratória, a que apresentamos como entrega principal
 da Aula 03. O foco é só um: os **tempos do navio** no porto de Santos
 (espera, atracação, operação e desatracação).
 
