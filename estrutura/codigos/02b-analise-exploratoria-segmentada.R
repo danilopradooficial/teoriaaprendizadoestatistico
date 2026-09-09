@@ -1,7 +1,7 @@
 # Graficos da Análise Exploratória segmentada (Atividade 02B) - so tempos T1..T4, TA, TE.
 # Na raiz:
-#   Rscript Atividades/atividade_02/modelo_graficos_analise_segmentada.R
-# PNGs em Atividades/atividade_02/graficos/segmentada/
+#   Rscript estrutura/codigos/02b-analise-exploratoria-segmentada.R
+# PNGs em consolidados/graficos/02b/
 
 user_lib <- file.path(Sys.getenv("USERPROFILE"), "Documents", "R", "win-library", "4.6")
 dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
@@ -11,14 +11,14 @@ if (!requireNamespace("data.table", quietly = TRUE)) {
 }
 library(data.table)
 
-root <- if (file.exists("DatasetMovimentacaoPortuaria")) {
+root <- if (file.exists(file.path("estrutura", "dataset"))) {
   "."
-} else if (file.exists(file.path("..", "..", "DatasetMovimentacaoPortuaria"))) {
+} else if (file.exists(file.path("..", "..", "estrutura", "dataset"))) {
   file.path("..", "..")
 } else stop("Rode na raiz do repositorio.")
 setwd(root)
 
-out_dir <- file.path("Atividades", "atividade_02", "graficos", "segmentada")
+out_dir <- file.path("consolidados", "graficos", "02b")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 salvar <- function(nome, expr, mar = c(4.5, 4.5, 3.2, 1.2)) {
@@ -39,8 +39,8 @@ ler <- function(f) {
 }
 
 # Usa 2024 (mesmo recorte da regressao) + foco Santos carga
-atrac  <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024Atracacao.txt"))
-tempos <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024TemposAtracacao.txt"))
+atrac  <- ler(file.path("estrutura", "dataset", "2024", "2024Atracacao.txt"))
+tempos <- ler(file.path("estrutura", "dataset", "2024", "2024TemposAtracacao.txt"))
 
 cols_t <- c("TEsperaAtracacao", "TEsperaInicioOp", "TOperacao",
             "TEsperaDesatracacao", "TAtracado", "TEstadia")
@@ -72,7 +72,7 @@ cap99 <- function(x) {
 
 # ---- 01 hist T3 + normal (lab PDF) ----
 t3c <- cap99(mc$T3)
-salvar("01_t3_hist_normal.png", {
+salvar("01-t3-hist-normal.png", {
   hist(t3c, breaks = 40, prob = TRUE, col = cinza, border = "grey40",
        main = "Tempo de operacao (T3) em Santos - ate P99",
        xlab = "Horas no cais operando", ylab = "Densidade")
@@ -83,7 +83,7 @@ salvar("01_t3_hist_normal.png", {
 })
 
 # ---- 02 boxplot T3 por navegacao ----
-salvar("02_t3_por_navegacao.png", {
+salvar("02-t3-por-navegacao.png", {
   boxplot(T3 ~ `Tipo de Navegação da Atracação`, data = mc,
           outline = FALSE, las = 2, col = cinza,
           main = "Tempo de operacao (T3) por tipo de viagem",
@@ -91,7 +91,7 @@ salvar("02_t3_por_navegacao.png", {
 }, mar = c(10, 4.5, 3.2, 1.2))
 
 # ---- 03 boxplots dos quatro tempos lado a lado (amostra comparavel) ----
-salvar("03_quatro_tempos_boxplot.png", {
+salvar("03-quatro-tempos-boxplot.png", {
   d <- mc[is.finite(T1) & is.finite(T2) & is.finite(T3) & is.finite(T4)]
   # corta P99 de cada um para leitura
   for (cl in c("T1", "T2", "T3", "T4")) {
@@ -107,7 +107,7 @@ salvar("03_quatro_tempos_boxplot.png", {
 })
 
 # ---- 04 mediana dos tempos ----
-salvar("04_medianas_tempos.png", {
+salvar("04-medianas-tempos.png", {
   meds <- c(
     T1 = median(mc$T1, na.rm = TRUE),
     T2 = median(mc$T2, na.rm = TRUE),
@@ -123,14 +123,14 @@ salvar("04_medianas_tempos.png", {
 
 # ---- 05 hist T1 (fila) ----
 t1c <- cap99(mc$T1[is.finite(mc$T1)])
-salvar("05_t1_hist_fila.png", {
+salvar("05-t1-hist-fila.png", {
   hist(t1c, breaks = 40, prob = TRUE, col = cinza, border = "grey40",
        main = "Tempo de fila antes de atracar (T1)",
        xlab = "Horas esperando para atracar", ylab = "Densidade")
 })
 
 # numeros
-sink(file.path("Atividades", "atividade_02", "_numeros.txt"))
+sink(file.path("estrutura", "codigos", "02b-numeros.txt"))
 cat("n=", nrow(mc), "\n", sep = "")
 for (cl in c("T1", "T2", "T3", "T4", "TA", "TE")) {
   x <- mc[[cl]]

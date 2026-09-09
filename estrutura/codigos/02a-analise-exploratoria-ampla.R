@@ -1,7 +1,7 @@
 # Graficos da exploracao AMPLA (Atividade 02A).
 # Na raiz:
-#   Rscript Atividades/atividade_02/modelo_graficos_analise_ampla.R
-# PNGs em Atividades/atividade_02/graficos/ampla/
+#   Rscript estrutura/codigos/02a-analise-exploratoria-ampla.R
+# PNGs em consolidados/graficos/02a/
 
 user_lib <- file.path(Sys.getenv("USERPROFILE"), "Documents", "R", "win-library", "4.6")
 dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
@@ -11,20 +11,20 @@ if (!requireNamespace("data.table", quietly = TRUE)) {
 }
 library(data.table)
 
-root <- if (file.exists("DatasetMovimentacaoPortuaria")) {
+root <- if (file.exists(file.path("estrutura", "dataset"))) {
   "."
-} else if (file.exists(file.path("..", "..", "DatasetMovimentacaoPortuaria"))) {
+} else if (file.exists(file.path("..", "..", "estrutura", "dataset"))) {
   file.path("..", "..")
 } else {
   stop("Rode na raiz do repositorio.")
 }
 setwd(root)
 
-out_dir <- file.path("Atividades", "atividade_02", "graficos", "ampla")
+out_dir <- file.path("consolidados", "graficos", "02a")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 # remove PNGs antigos da galeria 03-12 (nomes antigos e novos)
-old <- list.files(out_dir, pattern = "^(0[3-9]|1[0-2])_.*\\.png$", full.names = TRUE)
+old <- list.files(out_dir, pattern = "^(0[3-9]|1[0-2])[-_].*\\.png$", full.names = TRUE)
 if (length(old)) file.remove(old)
 
 salvar <- function(nome, expr, mar = c(4.5, 4.5, 3.2, 1.2)) {
@@ -44,9 +44,9 @@ ler <- function(f) {
         na.strings = c("", "n/a", "NA", "N/A"))
 }
 
-atrac  <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024Atracacao.txt"))
-tempos <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024TemposAtracacao.txt"))
-carga  <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024Carga.txt"))
+atrac  <- ler(file.path("estrutura", "dataset", "2024", "2024Atracacao.txt"))
+tempos <- ler(file.path("estrutura", "dataset", "2024", "2024TemposAtracacao.txt"))
+carga  <- ler(file.path("estrutura", "dataset", "2024", "2024Carga.txt"))
 
 # tempos numericos
 for (cl in c("TEsperaAtracacao", "TEsperaInicioOp", "TOperacao",
@@ -89,7 +89,7 @@ t3_br_cap <- t3_br[t3_br <= quantile(t3_br, 0.99)]
 
 cat("BR carga n=", nrow(mc_br), " med_T3=", median(t3_br), "\n", sep = "")
 
-salvar("01_t3_hist_dnorm.png", {
+salvar("01-t3-hist-dnorm.png", {
   hist(t3_br_cap, breaks = 40, prob = TRUE, col = cinza, border = "grey40",
        main = "Brasil 2024 - T3 + Normal (ate P99)",
        xlab = "TOperacao (horas)", ylab = "Densidade")
@@ -98,7 +98,7 @@ salvar("01_t3_hist_dnorm.png", {
   legend("topright", legend = "N(media, desvio)", lwd = 2, col = laranja, bty = "n")
 })
 
-salvar("02_t3_boxplot_regiao.png", {
+salvar("02-t3-boxplot-regiao.png", {
   boxplot(TOperacao ~ `Região Geográfica`, data = mc_br, outline = FALSE,
           las = 2, col = cinza, main = "Brasil 2024 - T3 por Regiao",
           xlab = "", ylab = "TOperacao (horas)")
@@ -145,7 +145,7 @@ cat("Santos escalas=", nrow(santos),
     "\n", sep = "")
 
 # ---- 03 sazonalidade de escalas ----
-salvar("03_santos_escalas_mes.png", {
+salvar("03-santos-escalas-mes.png", {
   tab <- table(santos$Mes)
   bp <- barplot(as.numeric(tab), names.arg = names(tab), col = azul, border = NA,
                 main = "Santos 2024 - escalas por mes",
@@ -156,7 +156,7 @@ salvar("03_santos_escalas_mes.png", {
 })
 
 # ---- 04 composicao navegacao (horizontal %) ----
-salvar("04_santos_navegacao.png", {
+salvar("04-santos-navegacao.png", {
   tab <- sort(table(santos_mc$`Tipo de Navegação da Atracação`), decreasing = TRUE)
   pct <- 100 * as.numeric(tab) / sum(tab)
   names(pct) <- names(tab)
@@ -168,7 +168,7 @@ salvar("04_santos_navegacao.png", {
 }, mar = c(4.5, 12, 3.2, 1.2))
 
 # ---- 05 T3 por navegacao em Santos ----
-salvar("05_santos_t3_navegacao.png", {
+salvar("05-santos-t3-navegacao.png", {
   boxplot(TOperacao ~ `Tipo de Navegação da Atracação`, data = santos_mc,
           outline = FALSE, las = 2, col = cinza,
           main = "Santos - T3 (operacao) por navegacao",
@@ -176,7 +176,7 @@ salvar("05_santos_t3_navegacao.png", {
 }, mar = c(10, 4.5, 3.2, 1.2))
 
 # ---- 06 top berços ----
-salvar("06_santos_top_bercos.png", {
+salvar("06-santos-top-bercos.png", {
   ber <- santos_mc[!is.na(Berço) & Berço != "", .N, by = Berço]
   setorder(ber, -N)
   ber <- head(ber, 12)
@@ -188,7 +188,7 @@ salvar("06_santos_top_bercos.png", {
 }, mar = c(4.5, 10, 3.2, 1.2))
 
 # ---- 07 peso por natureza ----
-salvar("07_santos_peso_natureza.png", {
+salvar("07-santos-peso-natureza.png", {
   par(mar = c(4.5, 14, 3.2, 1.2))
   barplot(rev(peso_nat$peso_mt), names.arg = rev(peso_nat$`Natureza da Carga`),
           horiz = TRUE, las = 1, col = azul, border = NA,
@@ -197,7 +197,7 @@ salvar("07_santos_peso_natureza.png", {
 }, mar = c(4.5, 14, 3.2, 1.2))
 
 # ---- 08 sentido embarque/desembarque ----
-salvar("08_santos_sentido_peso.png", {
+salvar("08-santos-sentido-peso.png", {
   sentido2 <- sentido[Sentido %in% c("Embarcados", "Desembarcados")]
   sentido2[, peso_mt := peso_t / 1e6]
   setorder(sentido2, -peso_mt)
@@ -211,7 +211,7 @@ salvar("08_santos_sentido_peso.png", {
 set.seed(2024)
 esc_ok <- esc[peso_t > 0 & is.finite(TOperacao)]
 idx <- sample.int(nrow(esc_ok), min(4000L, nrow(esc_ok)))
-salvar("09_santos_peso_vs_t3.png", {
+salvar("09-santos-peso-vs-t3.png", {
   x <- log1p(esc_ok$peso_t[idx])
   y <- log1p(esc_ok$TOperacao[idx])
   plot(x, y, pch = 16, cex = 0.35, col = rgb(44/255, 95/255, 138/255, 0.35),
@@ -222,7 +222,7 @@ salvar("09_santos_peso_vs_t3.png", {
 })
 
 # ---- 10 densidade T3: Santos vs demais Sudeste ----
-salvar("10_santos_vs_sudeste_t3.png", {
+salvar("10-santos-vs-sudeste-t3.png", {
   d_s <- density(santos_mc$TOperacao[santos_mc$TOperacao <= quantile(santos_mc$TOperacao, 0.99)],
                  na.rm = TRUE)
   d_o <- density(se_outros$TOperacao[se_outros$TOperacao <= quantile(se_outros$TOperacao, 0.99)],
@@ -242,7 +242,7 @@ salvar("10_santos_vs_sudeste_t3.png", {
 })
 
 # ---- 11 mediana T1 (fila) por mes ----
-salvar("11_santos_fila_mes.png", {
+salvar("11-santos-fila-mes.png", {
   fila <- santos_mc[is.finite(TEsperaAtracacao),
                     .(med_t1 = median(TEsperaAtracacao),
                       p90_t1 = as.numeric(quantile(TEsperaAtracacao, 0.90))),
@@ -262,7 +262,7 @@ salvar("11_santos_fila_mes.png", {
 })
 
 # ---- 12 mosaic Mes x Navegacao (mix sazonal) ----
-salvar("12_santos_mes_navegacao.png", {
+salvar("12-santos-mes-navegacao.png", {
   # agrupa navegacoes raras
   tmp <- copy(santos_mc)
   top_nav <- names(sort(table(tmp$`Tipo de Navegação da Atracação`), decreasing = TRUE))[1:3]

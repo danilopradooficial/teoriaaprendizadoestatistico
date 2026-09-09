@@ -1,13 +1,14 @@
 # Atividade 04 - Regressão logística
 
-**Teoria do Aprendizado Estatístico · Fatec Rubens Lara · Aula 05**
+**Team Shannon · Teoria do Aprendizado Estatístico · Fatec Rubens Lara · Aula 05**
 
-Continua a [Atividade 03](../atividade_03/regressao_linear_e_previsao_t3.md):
+Continua a [03a](03a-regressao-linear-t3.md) e a [03b](03b-previsao-fila-t3.md):
 as **mesmas duas perguntas**, agora com resposta **sim ou não**
 (probabilidade), como pede a
-[Aula 05](../../MateriaisAulas/Aula%2005%20-%20Classificação%20e%20Regressão%20Logística.PDF).
+[Aula 05](../materiais-aulas/Aula%2005%20-%20Classificação%20e%20Regressão%20Logística.PDF).
 
-Script: `[modelo_regressao_logistica.R](modelo_regressao_logistica.R)`.
+Script: [`04-regressao-logistica.R`](../estrutura/codigos/04-regressao-logistica.R).
+Números: [`04-numeros.txt`](../estrutura/codigos/04-numeros.txt).
 
 ---
 
@@ -16,10 +17,11 @@ Script: `[modelo_regressao_logistica.R](modelo_regressao_logistica.R)`.
 
 | #   | Etapa            | O que fizemos                                                                                                                                                                         |
 | --- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 01  | Base inteira     | [Dicionário](../atividade_01/dicionario_variaveis_amplo_completo.md): tipos, joins, unidade amostral                                                                                  |
-| 02A | Exploração ampla | [Análise Exploratória larga](../atividade_02/analise_exploratoria_ampla_completa.md): inventário, carga, geografia                                                                                     |
-| 02B | Tempos do navio  | [Análise Exploratória segmentada](../atividade_02/analise_exploratoria_segmentada_entrega.md): T1, T2, **T3**, T4                                                                                      |
-| 03  | Só T3 (contínuo) | [Regressão T3 ~ peso + TEU](../atividade_03/regressao_linear_e_previsao_t3.md#regressao-t3); [Previsão T3 em T1/T2](../atividade_03/regressao_linear_e_previsao_t3.md#previsao-t1-t2) |
+| 01  | Base inteira     | [Dicionário](01-dicionario-variaveis.md): tipos, joins, unidade amostral                                                                                  |
+| 02a | Exploração ampla | [Análise Exploratória larga](02a-analise-exploratoria-ampla.md): inventário, carga, geografia                                                                                     |
+| 02b | Tempos do navio  | [Análise Exploratória segmentada](02b-analise-exploratoria-segmentada.md): T1, T2, **T3**, T4                                                                                      |
+| 03a | Só T3 (contínuo) | [Regressão T3 ~ peso + TEU](03a-regressao-linear-t3.md) |
+| 03b | Previsão na fila | [Previsão T3 em T1/T2](03b-previsao-fila-t3.md) |
 | 04  | Só T3 (binário)  | **Esta entrega**: [duas perguntas](#as-duas-perguntas) em sim/não                                                                                                                     |
 
 
@@ -35,8 +37,8 @@ Na Atividade 03 usamos `lm` e a resposta vinha em **horas**. Aqui usamos
 
 | #   | Atividade 03 (horas)                                                                                      | Atividade 04 (sim/não)                   | Onde está abaixo          |
 | --- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------------- |
-| 1   | [Dá para estimar T3 com peso e TEU?](../atividade_03/regressao_linear_e_previsao_t3.md#regressao-t3)      | **A operação vai passar de 30 h?**       | [Pergunta 1](#pergunta-1) |
-| 2   | [Dá para antecipar T3 na fila (T1/T2)?](../atividade_03/regressao_linear_e_previsao_t3.md#previsao-t1-t2) | **Antes de operar, vai passar de 30 h?** | [Pergunta 2](#pergunta-2) |
+| 1   | [Dá para estimar T3 com peso e TEU?](03a-regressao-linear-t3.md) | **A operação vai passar de 30 h?** | [Pergunta 1](#pergunta-1) |
+| 2   | [Dá para antecipar T3 na fila (T1/T2)?](03b-previsao-fila-t3.md) | **Antes de operar, vai passar de 30 h?** | [Pergunta 2](#pergunta-2) |
 
 
 **Pergunta 1.** Sabendo peso e TEU, a operação será longa (T3 > 30 h)?
@@ -90,7 +92,7 @@ P(Y=1 \mid X) = \frac{1}{1 + e^{-(b_0 + b_1 X_1 + b_2 X_2)}}
 ## Pergunta 1: a operação vai passar de 30 h?
 
 Equivalente binária de: *dá para estimar T3 com peso e TEU?* (Atividade 03,
-[seção 1](../atividade_03/regressao_linear_e_previsao_t3.md#regressao-t3)).
+[03a](03a-regressao-linear-t3.md)).
 
 ### Curva sigmoide (1 preditor, desenho do caderno)
 
@@ -100,7 +102,7 @@ Para montar o gráfico da Aula 05, primeiro ajusto só com tonelagem:
 m_simples <- glm(y_op_longa ~ log_peso, data = esc_m, family = binomial)
 ```
 
-![P(T3 > 30 h | tonelagem)](graficos/01_prob_t3_longa.png)
+![P(T3 > 30 h | tonelagem)](graficos/04/01-prob-t3-longa.png)
 
 No peso mediano (~24 mil t): P(sim) ≈ **54%**, P(não) ≈ **46%**.
 
@@ -108,7 +110,7 @@ No peso mediano (~24 mil t): P(sim) ≈ **54%**, P(não) ≈ **46%**.
 \text{logit}\bigl(P(Y{=}1)\bigr) = -8{,}52 + 0{,}86 \cdot \log(1+\text{peso})
 
 
-![Reta log-odds e curva](graficos/02_reta_logodds_e_curva.png)
+![Reta log-odds e curva](graficos/04/02-reta-logodds-e-curva.png)
 
 Esquerda: reta nos log-odds. Direita: curva sigmoide.
 
@@ -127,7 +129,7 @@ m_multi <- glm(y_op_longa ~ log_peso + log_teu, data = esc_m, family = binomial)
 
 Três cenários (os mesmos da Atividade 03):
 
-![Cenários - pergunta 1](graficos/03_prob_t3_cenarios.png)
+![Cenários - pergunta 1](graficos/04/03-prob-t3-cenarios.png)
 
 
 | Cenário                  | Peso      | TEU      | P(T3 > 30 h) |
@@ -163,7 +165,7 @@ odds <- p0 / (1 - p0)
 ## Pergunta 2: antes de operar, vai passar de 30 h?
 
 Equivalente binária de: *dá para antecipar T3 na fila (T1/T2)?* (Atividade 03,
-[seção 2](../atividade_03/regressao_linear_e_previsao_t3.md#previsao-t1-t2)).
+[03b](03b-previsao-fila-t3.md)).
 
 Na chegada ao porto sabemos peso e TEU, mas ainda não sabemos T3. Reaplico
 o **mesmo** `glm` da Pergunta 1. T1 e T2 entram só para escolher o grupo,
@@ -179,7 +181,7 @@ como na previsão linear.
 Para cada grupo, calculo P(T3 > 30 h) prevista pelo modelo (mediana do grupo)
 e comparo com a proporção observada no histórico:
 
-![Pergunta 2 - T1 e T2](graficos/04_prob_t3_fila_t1_t2.png)
+![Pergunta 2 - T1 e T2](graficos/04/04-prob-t3-fila-t1-t2.png)
 
 
 | Grupo           | % observado (T3 > 30 h) | P(sim) prevista (mediana) |
@@ -208,7 +210,7 @@ se operação longa é **provável ou não** antes do T3 começar.
 ## Como rodar
 
 ```r
-Rscript Atividades/atividade_04/modelo_regressao_logistica.R
+Rscript estrutura/codigos/04-regressao-logistica.R
 ```
 
-Números em `_numeros.txt`. Fonte: ANTAQ, Santos 2024.
+Números em `04-numeros.txt`. Fonte: ANTAQ, Santos 2024.

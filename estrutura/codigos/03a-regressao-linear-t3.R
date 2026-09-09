@@ -1,5 +1,5 @@
 # Atividade 03 - Regressao linear T3 ~ tonelagem + TEU (Aula 04)
-# Na raiz: Rscript Atividades/atividade_03/modelo_regressao_linear_t3.R
+# Na raiz: Rscript estrutura/codigos/03a-regressao-linear-t3.R
 
 user_lib <- file.path(Sys.getenv("USERPROFILE"), "Documents", "R", "win-library", "4.6")
 dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
@@ -9,16 +9,16 @@ if (!requireNamespace("data.table", quietly = TRUE)) {
 }
 library(data.table)
 
-root <- if (file.exists("DatasetMovimentacaoPortuaria")) {
+root <- if (file.exists(file.path("estrutura", "dataset"))) {
   "."
-} else if (file.exists(file.path("..", "..", "DatasetMovimentacaoPortuaria"))) {
+} else if (file.exists(file.path("..", "..", "estrutura", "dataset"))) {
   file.path("..", "..")
 } else {
   stop("Rode na raiz do repositorio.")
 }
 setwd(root)
 
-out_dir <- file.path("Atividades", "atividade_03", "graficos")
+out_dir <- file.path("consolidados", "graficos", "03a")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 salvar <- function(nome, expr, mar = c(4.5, 4.5, 3.2, 1.2)) {
@@ -37,9 +37,9 @@ ler <- function(f) {
         na.strings = c("", "n/a", "NA", "N/A"))
 }
 
-atrac  <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024Atracacao.txt"))
-tempos <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024TemposAtracacao.txt"))
-carga  <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024Carga.txt"))
+atrac  <- ler(file.path("estrutura", "dataset", "2024", "2024Atracacao.txt"))
+tempos <- ler(file.path("estrutura", "dataset", "2024", "2024TemposAtracacao.txt"))
+carga  <- ler(file.path("estrutura", "dataset", "2024", "2024Carga.txt"))
 
 for (cl in c("TOperacao")) {
   if (!is.numeric(tempos[[cl]])) {
@@ -77,7 +77,7 @@ cat("n=", nrow(esc_m), "\n", sep = "")
 m_simples <- lm(y ~ log_peso, data = esc_m)
 s_simples <- summary(m_simples)
 
-salvar("01_reta_simples.png", {
+salvar("01-reta-simples.png", {
   set.seed(2024)
   idx <- sample.int(nrow(esc_m), min(3000L, nrow(esc_m)))
   plot(esc_m$log_peso[idx], esc_m$y[idx],
@@ -89,7 +89,7 @@ salvar("01_reta_simples.png", {
 
 # ---- correlacao peso x teu ----
 C <- cor(esc_m[, .(log_peso, log_teu)], use = "complete.obs")
-salvar("02_cor_peso_teu.png", {
+salvar("02-cor-peso-teu.png", {
   image(c(1, 2), c(1, 2), t(C), zlim = c(-1, 1),
         col = colorRampPalette(c(laranja, "white", azul))(40),
         axes = FALSE, main = "Correlacao: tonelagem x TEU")
@@ -105,7 +105,7 @@ salvar("02_cor_peso_teu.png", {
 m_multi <- lm(y ~ log_peso + log_teu, data = esc_m)
 s_multi <- summary(m_multi)
 
-salvar("03_residuos_vs_ajustados.png", {
+salvar("03-residuos-vs-ajustados.png", {
   plot(fitted(m_multi), resid(m_multi),
        pch = 16, cex = 0.4, col = rgb(44/255, 95/255, 138/255, 0.35),
        main = "Residuos vs ajustados",
@@ -136,7 +136,7 @@ cenarios$T3_upr <- expm1(pint[, "upr"])
 
 x0 <- log1p(median(esc_m$peso_t))
 y0 <- predict(m_simples, newdata = data.frame(log_peso = x0))
-salvar("04_previsao_x0.png", {
+salvar("04-previsao-x0.png", {
   set.seed(2024)
   idx <- sample.int(nrow(esc_m), min(2500L, nrow(esc_m)))
   plot(esc_m$log_peso[idx], esc_m$y[idx],
@@ -149,7 +149,7 @@ salvar("04_previsao_x0.png", {
        pos = 4, col = laranja, cex = 0.9)
 })
 
-sink(file.path("Atividades", "atividade_03", "_numeros_regressao.txt"))
+sink(file.path("estrutura", "codigos", "03a-numeros.txt"))
 cat("n=", nrow(esc_m), "\n", sep = "")
 print(coef(m_simples))
 cat("R2_s=", s_simples$r.squared, "\n", sep = "")

@@ -1,6 +1,6 @@
 # Atividade 04 - Regressao logistica (Aula 05)
 # Continua o funil da Atividade 03: Y binario derivado de T3.
-# Na raiz: Rscript Atividades/atividade_04/modelo_regressao_logistica.R
+# Na raiz: Rscript estrutura/codigos/04-regressao-logistica.R
 
 user_lib <- file.path(Sys.getenv("USERPROFILE"), "Documents", "R", "win-library", "4.6")
 dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
@@ -10,16 +10,16 @@ if (!requireNamespace("data.table", quietly = TRUE)) {
 }
 library(data.table)
 
-root <- if (file.exists("DatasetMovimentacaoPortuaria")) {
+root <- if (file.exists(file.path("estrutura", "dataset"))) {
   "."
-} else if (file.exists(file.path("..", "..", "DatasetMovimentacaoPortuaria"))) {
+} else if (file.exists(file.path("..", "..", "estrutura", "dataset"))) {
   file.path("..", "..")
 } else {
   stop("Rode na raiz do repositorio.")
 }
 setwd(root)
 
-out_dir <- file.path("Atividades", "atividade_04", "graficos")
+out_dir <- file.path("consolidados", "graficos", "04")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 salvar <- function(nome, expr, w = 1000, h = 1000, mar = c(4.5, 4.5, 3.2, 1.2)) {
@@ -38,9 +38,9 @@ ler <- function(f) {
         na.strings = c("", "n/a", "NA", "N/A"))
 }
 
-atrac  <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024Atracacao.txt"))
-tempos <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024TemposAtracacao.txt"))
-carga  <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024Carga.txt"))
+atrac  <- ler(file.path("estrutura", "dataset", "2024", "2024Atracacao.txt"))
+tempos <- ler(file.path("estrutura", "dataset", "2024", "2024TemposAtracacao.txt"))
+carga  <- ler(file.path("estrutura", "dataset", "2024", "2024Carga.txt"))
 
 for (cl in c("TOperacao", "TEsperaAtracacao", "TEsperaInicioOp")) {
   if (cl %in% names(tempos) && !is.numeric(tempos[[cl]])) {
@@ -92,7 +92,7 @@ eta0   <- as.numeric(b[1] + b[2] * x0_med)
 p0     <- sigmoid(eta0)
 odds0  <- p0 / (1 - p0)
 
-salvar("01_prob_t3_longa.png", {
+salvar("01-prob-t3-longa.png", {
   plot(xseq, prob, type = "l", lwd = 3, col = azul, ylim = c(0, 1),
        main = "P(T3 > 30 h | tonelagem)",
        xlab = "log1p(peso da escala, t)",
@@ -111,7 +111,7 @@ salvar("01_prob_t3_longa.png", {
          bty = "n", cex = 0.8)
 })
 
-salvar("02_reta_logodds_e_curva.png", {
+salvar("02-reta-logodds-e-curva.png", {
   layout(matrix(c(1, 2), 1, 2), widths = c(1, 1))
   par(pty = "s", mar = c(4.5, 4.5, 3.2, 1.2))
   plot(xseq, eta, type = "l", lwd = 2, col = laranja,
@@ -149,7 +149,7 @@ cenarios$eta <- predict(m_multi, newdata = cenarios, type = "link")
 cenarios$p   <- plogis(cenarios$eta)
 cenarios$odds <- cenarios$p / (1 - cenarios$p)
 
-salvar("03_prob_t3_cenarios.png", {
+salvar("03-prob-t3-cenarios.png", {
   bp <- barplot(cenarios$p, col = azul, border = NA, ylim = c(0, 1),
                 main = "Pergunta 1: P(T3 > 30 h) nos cenarios",
                 ylab = "Probabilidade",
@@ -178,7 +178,7 @@ tab_fila <- rbind(
   resumo_grupo(grp_t2, "T2 alto (berco)")
 )
 
-salvar("04_prob_t3_fila_t1_t2.png", {
+salvar("04-prob-t3-fila-t1-t2.png", {
   bp <- barplot(tab_fila$p_hat_med,
                 beside = TRUE, col = c(azul, laranja), border = NA,
                 ylim = c(0, 1), ylab = "P(T3 > 30 h) prevista (mediana)",
@@ -191,7 +191,7 @@ salvar("04_prob_t3_fila_t1_t2.png", {
   abline(h = 0.5, lty = 2, col = "grey70")
 }, w = 1100, h = 900)
 
-sink(file.path("Atividades", "atividade_04", "_numeros.txt"))
+sink(file.path("estrutura", "codigos", "04-numeros.txt"))
 cat("n=", nrow(esc_m), "\n", sep = "")
 cat("corte_T3_h=30\n", sep = "")
 cat("med_T3=", median(esc_m$T3), "\n", sep = "")

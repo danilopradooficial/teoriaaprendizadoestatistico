@@ -2,7 +2,7 @@
 
 # Atividade 01 - Dados e Variáveis
 
-**Teoria do Aprendizado Estatístico · Ciência de Dados · Fatec Rubens Lara**
+**Team Shannon · Teoria do Aprendizado Estatístico · Ciência de Dados · Fatec Rubens Lara**
 
 Dicionário do banco escolhido para o semestre: para cada coluna, **nome**,
 **descrição**, **tipo estatístico**, **domínio** e **tipo no R** - e o
@@ -35,12 +35,15 @@ Para cada variável, a Aula 02 pede duas perguntas que não se misturam:
 
 ## Material de referência
 
-- [Aula 02 - Dados e Variáveis](../../MateriaisAulas/Aula%2002%20-%20Dados%20e%20Variáveis.PDF)
-- [Aula 01 - Introdução ao Aprendizado Estatístico](../../MateriaisAulas/Aula%2001%20-%20Introdução%20ao%20Aprendizado%20Estatístico.PDF)
-- [README da disciplina](../../readme.md)
+- [Aula 02 - Dados e Variáveis](../materiais-aulas/Aula%2002%20-%20Dados%20e%20Variáveis.PDF)
+- [Aula 01 - Introdução ao Aprendizado Estatístico](../materiais-aulas/Aula%2001%20-%20Introdução%20ao%20Aprendizado%20Estatístico.PDF)
+- [README da disciplina](../readme.md)
 
-O banco em si (`DatasetMovimentacaoPortuaria/`) fica só na máquina local
+O banco em si (`estrutura/dataset/`) fica só na máquina local
 e não entra no GitHub.
+
+Script da tipagem (laboratório da Aula 02):
+[`01-dicionario-variaveis.R`](../estrutura/codigos/01-dicionario-variaveis.R).
 
 ---
 
@@ -79,7 +82,7 @@ Documento de trabalho da disciplina **Teoria do Aprendizado Estatístico** (Fate
 > Um bom trabalho começa por um bom dicionário de variáveis.  
 > Sem ele, cada coluna é um enigma - e a análise vira chute.
 
-Banco: microdados do **Estatístico Aquaviário / SDP (ANTAQ)**, 2021-2025, em `DatasetMovimentacaoPortuaria/` (caminhos a partir da **raiz do repositório**; pasta local, fora do GitHub).  
+Banco: microdados do **Estatístico Aquaviário / SDP (ANTAQ)**, 2021-2025, em `estrutura/dataset/` (caminhos a partir da **raiz do repositório**; pasta local, fora do GitHub).  
 Leitura em R: `sep = ";"`, `dec = ","`, encoding UTF-8. Pacote de referência da aula: **base**; para o volume deste banco, `data.table::fread` é o equivalente prático de `read.table`.
 
 ---
@@ -146,6 +149,10 @@ Há **várias tabelas fato**. O n muda com a unidade:
 
 
 ## 3. Receita de tipagem em R (laboratório da Aula 02)
+
+O script [`01-dicionario-variaveis.R`](../estrutura/codigos/01-dicionario-variaveis.R)
+aplica esta receita em Santos/Brasil 2024 (`Atracacao` + `TemposAtracacao`)
+e grava as classes em `estrutura/codigos/01-numeros.txt`.
 
 Aplica-se a **qualquer** tabela depois do `fread`:
 
@@ -565,7 +572,7 @@ Se `summary` de `CDTUP` imprimir média, a tipagem falhou.
 
 ## 17. Relação com o metadado oficial
 
-Os arquivos em `DatasetMovimentacaoPortuaria/DicionarioMetadados/` descrevem o **significado** normativo. Este dicionário descreve o que o R **lê** e como **tipar**. Divergências conhecidas (nome no arquivo ≠ nome no metadado, rótulo ≠ código) estão na [Parte II, seção 11](#11-divergências-dicionário--microdados). Em conflito, prevalece o cabeçalho do microdado - e o recode fica registrado aqui.
+Os arquivos em `estrutura/dataset/DicionarioMetadados/` descrevem o **significado** normativo. Este dicionário descreve o que o R **lê** e como **tipar**. Divergências conhecidas (nome no arquivo ≠ nome no metadado, rótulo ≠ código) estão na [Parte II, seção 11](#11-divergências-dicionário--microdados). Em conflito, prevalece o cabeçalho do microdado - e o recode fica registrado aqui.
 
 ---
 
@@ -585,7 +592,7 @@ Tarefa da aula: *traga o dicionário do banco que você escolheu*. Este arquivo 
 
 Origem, modelo relacional, flags de apuração, armadilhas e o encaixe nas tarefas clássicas de aprendizado estatístico. Leia **antes** de qualquer `fread()`.
 
-Os microdados ficam em `DatasetMovimentacaoPortuaria/` **só na máquina local** (~4,6 GB) e **não entram no GitHub**. Caminhos neste texto são relativos à **raiz do repositório**.
+Os microdados ficam em `estrutura/dataset/` **só na máquina local** (~4,6 GB) e **não entram no GitHub**. Caminhos neste texto são relativos à **raiz do repositório**.
 
 ---
 
@@ -630,7 +637,7 @@ O dataset da ANTAQ **não** é um *toy dataset*. É um problema real, relacional
 - **definição operacional do alvo** (o que a ANTAQ chama de “movimentação” não é a soma crua de toneladas);
 - **custo computacional** (a tabela de carga conteinerizada tem da ordem de 13-15 milhões de linhas **por ano**).
 
-O material teórico permanece em `MateriaisAulas/` (Aula 01: introdução ao aprendizado estatístico; Aula 02: dados e variáveis - tipos, escalas de medida, unidade amostral). Os microdados, em `DatasetMovimentacaoPortuaria/` (pasta local, fora do Git). A Aula 02 é o pré-requisito direto deste dicionário: cada tabela da ANTAQ mistura numéricas (toneladas, TEU, horas), categóricas de baixa cardinalidade (natureza, sentido, flags) e categóricas de altíssima cardinalidade (porto, NCM, berço).
+O material teórico permanece em `materiais-aulas/` (Aula 01: introdução ao aprendizado estatístico; Aula 02: dados e variáveis - tipos, escalas de medida, unidade amostral). Os microdados, em `estrutura/dataset/` (pasta local, fora do Git). A Aula 02 é o pré-requisito direto deste dicionário: cada tabela da ANTAQ mistura numéricas (toneladas, TEU, horas), categóricas de baixa cardinalidade (natureza, sentido, flags) e categóricas de altíssima cardinalidade (porto, NCM, berço).
 
 ---
 
@@ -644,7 +651,7 @@ O material teórico permanece em `MateriaisAulas/` (Aula 01: introdução ao apr
 | Órgão produtor                 | **Agência Nacional de Transportes Aquaviários (ANTAQ)**                                                                            |
 | Produto estatístico            | **Estatístico Aquaviário**                                                                                                         |
 | Sistema transacional de origem | **Sistema de Desempenho Portuário (SDP)**                                                                                          |
-| Modelo de dados oficial        | `DatasetMovimentacaoPortuaria/Relacionamentos/modelo_dados.png` (atualizado em **abril/2025**)                                     |
+| Modelo de dados oficial        | `estrutura/dataset/Relacionamentos/modelo_dados.png` (atualizado em **abril/2025**)                                     |
 | Recorte nesta pasta local      | Anos-calendário **2021, 2022, 2023, 2024 e 2025** (fora do GitHub)                                                                 |
 | Critério de partição anual     | **Ano e mês da desatracação** da embarcação (não da chegada nem da atracação)                                                      |
 | Abrangência geográfica         | Instalações portuárias brasileiras (portos organizados e terminais autorizados), com origens e destinos nacionais e internacionais |
@@ -673,19 +680,17 @@ Há dois conceitos que **não** devem ser misturados:
 
 ```text
 TeoriaAprendizadoEstatistico/
-├── README.md                              # visão geral da disciplina
-├── Atividades/
-│   ├── atividade_01/dicionario_variaveis_amplo_completo.md
-│   ├── atividade_02/
-│   ├── atividade_03/
-│   └── atividade_04/
-├── MateriaisAulas/                        # PDFs da disciplina
-└── DatasetMovimentacaoPortuaria/          # LOCAL - não vai para o GitHub
-    ├── 2021/ … 2025/                      # tabelas fato, um diretório por ano
-    ├── TabelasAuxiliares/                 # dimensões (mercadoria e instalações)
-    ├── DicionarioMetadados/               # dicionário oficial (Atributo;Descrição)
-    └── Relacionamentos/
-        └── modelo_dados.png               # ER oficial ANTAQ (abr/2025)
+├── README.md
+├── estrutura/
+│   ├── dataset/                           # LOCAL - não vai para o GitHub
+│   │   ├── 2021/ … 2025/
+│   │   ├── TabelasAuxiliares/
+│   │   ├── DicionarioMetadados/
+│   │   └── Relacionamentos/
+│   │       └── modelo_dados.png
+│   └── codigos/
+├── consolidados/
+└── materiais-aulas/
 ```
 
 
@@ -734,7 +739,7 @@ As dimensões valem para todo o quinquênio. O conjunto de origens **não** é i
 
 O diagrama oficial da ANTAQ (abril/2025) está em:
 
-`DatasetMovimentacaoPortuaria/Relacionamentos/modelo_dados.png`
+`estrutura/dataset/Relacionamentos/modelo_dados.png`
 
 Arquitetura em estrela com **dois fatos centrais** - `Atracacao` e `Carga` - ligados por `IDAtracacao`.
 
@@ -931,7 +936,7 @@ library(data.table)
 library(lubridate)
 
 atrac <- fread(
-  file = "DatasetMovimentacaoPortuaria/2024/2024Atracacao.txt",
+  file = "estrutura/dataset/2024/2024Atracacao.txt",
   sep = ";",
   encoding = "UTF-8",
   dec = ",",
@@ -1243,7 +1248,7 @@ Códigos especiais: `BR200` (Terminais Interiores), `ZZZZ999` (Não Informado). 
 
 ## 10. Dicionário de metadados oficial
 
-Em `DatasetMovimentacaoPortuaria/DicionarioMetadados/` há 16 arquivos `Metadados*.txt` no formato `Atributo;Descrição`. São a fonte normativa dos **significados**. Não são a fonte dos **nomes de coluna** dos microdados (seção 11).
+Em `estrutura/dataset/DicionarioMetadados/` há 16 arquivos `Metadados*.txt` no formato `Atributo;Descrição`. São a fonte normativa dos **significados**. Não são a fonte dos **nomes de coluna** dos microdados (seção 11).
 
 
 | Arquivo de metadados                      | Tabela correspondente                            |
@@ -1494,7 +1499,7 @@ Esqueleto de junção escala-carga-tempos (um ano):
 library(data.table)
 
 ano  <- 2024
-base <- "DatasetMovimentacaoPortuaria"
+base <- "estrutura/dataset"
 
 atrac  <- fread(file.path(base, ano, paste0(ano, "Atracacao.txt")),
                 sep = ";", dec = ",", encoding = "UTF-8")
@@ -1545,36 +1550,25 @@ Estratificar por `Complexo Portuário` e `Mes` se o interesse for representar o 
 ```text
 TeoriaAprendizadoEstatistico/
 ├── README.md
-├── Atividades/
-│   ├── atividade_01/dicionario_variaveis_amplo_completo.md
-│   ├── atividade_02/
-│   ├── atividade_03/
-│   └── atividade_04/
-├── MateriaisAulas/
-│   ├── Aula 01 - Introdução ao Aprendizado Estatístico.PDF
-│   ├── Aula 02 - Dados e Variáveis.PDF
-│   ├── Aula 03 - Análise Exploratória e Variáveis Aleatórias.PDF
-│   ├── Aula 04 - Regressão Linear.PDF
-│   └── Aula 05 - Classificação e Regressão Logística.PDF
-└── DatasetMovimentacaoPortuaria/          # LOCAL - ~4,61 GB, fora do Git
-    ├── Relacionamentos/
-    │   └── modelo_dados.png             # ER oficial ANTAQ, abr/2025
-    ├── DicionarioMetadados/             # 16 × Metadados*.txt
-    ├── TabelasAuxiliares/               # 4 dimensões
-    │   ├── Mercadoria.txt               # 1.405 linhas
-    │   ├── MercadoriaConteinerizada.txt # 1.298 linhas
-    │   ├── Instalacao_Origem.txt        # 3.557 linhas
-    │   └── Instalacao_Destino.txt       # 5.280 linhas
-    ├── 2021/                            # 11 tabelas; sem CargaAreas
-    ├── 2022/                            # 11 tabelas; sem CargaAreas
-    ├── 2023/                            # 12 tabelas
-    ├── 2024/                            # 12 tabelas
-    └── 2025/                            # 12 tabelas
+├── estrutura/
+│   ├── dataset/                         # LOCAL - ~4,61 GB, fora do Git
+│   │   ├── Relacionamentos/modelo_dados.png
+│   │   ├── DicionarioMetadados/
+│   │   ├── TabelasAuxiliares/
+│   │   ├── 2021/ … 2025/
+│   └── codigos/
+├── consolidados/
+└── materiais-aulas/
+    ├── Aula 01 - Introdução ao Aprendizado Estatístico.PDF
+    ├── Aula 02 - Dados e Variáveis.PDF
+    ├── Aula 03 - Análise Exploratória e Variáveis Aleatórias.PDF
+    ├── Aula 04 - Regressão Linear.PDF
+    └── Aula 05 - Classificação e Regressão Logística.PDF
 ```
 
-Total aproximado: **79 arquivos** de dados (fatos + dimensões + metadados + diagrama), **≈ 4,61 GB**, além dos PDFs em `MateriaisAulas/`.
+Total aproximado: **79 arquivos** de dados (fatos + dimensões + metadados + diagrama), **≈ 4,61 GB**, além dos PDFs em `materiais-aulas/`.
 
-`MateriaisAulas/` contém os PDFs da disciplina já disponibilizados (Aulas 01, 02 e 03) e deve receber os roteiros seguintes ao longo do semestre. Use a Aula 02 para classificar cada coluna deste dataset (quantitativa contínua, discreta, qualitativa ordinal/nominal, identificador) **antes** de escolher o modelo.
+`materiais-aulas/` contém os PDFs da disciplina já disponibilizados (Aulas 01, 02 e 03) e deve receber os roteiros seguintes ao longo do semestre. Use a Aula 02 para classificar cada coluna deste dataset (quantitativa contínua, discreta, qualitativa ordinal/nominal, identificador) **antes** de escolher o modelo.
 
 ---
 

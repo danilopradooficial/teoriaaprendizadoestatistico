@@ -1,8 +1,8 @@
 <div align="center">
 
-# Atividade 02A - Análise exploratória ampla (completa)
+# Atividade 02a - Análise exploratória ampla (completa)
 
-**Teoria do Aprendizado Estatístico · Ciência de Dados · Fatec Rubens Lara**
+**Team Shannon · Teoria do Aprendizado Estatístico · Ciência de Dados · Fatec Rubens Lara**
 
 Estatística descritiva do Estatístico Aquaviário (ANTAQ, 2021-2025):
 qualidade, univariada, bivariada, tempo, hierarquia e o que isso proíbe
@@ -24,7 +24,7 @@ valia a pena aprofundar. O que saltou aos olhos foram os **tempos do navio**
 (espera, atracação, operação e desatracação).
 
 A entrega enxuta pedida pelo professor está em
-[analise_exploratoria_segmentada_entrega.md](analise_exploratoria_segmentada_entrega.md).
+[02b-analise-exploratoria-segmentada.md](02b-analise-exploratoria-segmentada.md).
 Este arquivo fica como memória da exploração larga.
 
 ---
@@ -54,10 +54,10 @@ Antes de qualquer modelo (\(Y = f(X)+\varepsilon\)):
 
 ## Material de referência
 
-- [Aula 03 - Análise Exploratória e Variáveis Aleatórias](../../MateriaisAulas/Aula%2003%20-%20Análise%20Exploratória%20e%20Variáveis%20Aleatórias.PDF)
-- [Aula 02 - Dados e Variáveis](../../MateriaisAulas/Aula%2002%20-%20Dados%20e%20Variáveis.PDF)
-- [Dicionário de variáveis](../atividade_01/dicionario_variaveis_amplo_completo.md)
-- [README da disciplina](../../readme.md)
+- [Aula 03 - Análise Exploratória e Variáveis Aleatórias](../materiais-aulas/Aula%2003%20-%20Análise%20Exploratória%20e%20Variáveis%20Aleatórias.PDF)
+- [Aula 02 - Dados e Variáveis](../materiais-aulas/Aula%2002%20-%20Dados%20e%20Variáveis.PDF)
+- [Dicionário de variáveis](01-dicionario-variaveis.md)
+- [README da disciplina](../readme.md)
 
 Números calculados sobre os microdados **locais** (não versionados), com
 `sep = ";"`, `dec = ","`.
@@ -70,7 +70,7 @@ Os números abaixo foram calculados sobre **todos** os microdados locais (não s
 
 Notação: padrão brasileiro (ponto de milhar, vírgula decimal). Assim, **1.212 milhões de t** = 1,21 bilhão de toneladas.
 
-Companheiro: [dicionário de variáveis](../atividade_01/dicionario_variaveis_amplo_completo.md) (tipos, joins e flags). Caminhos de dados neste texto são relativos à **raiz do repositório**. O banco em `DatasetMovimentacaoPortuaria/` é local e não entra no GitHub.
+Companheiro: [dicionário de variáveis](01-dicionario-variaveis.md) (tipos, joins e flags). Caminhos de dados neste texto são relativos à **raiz do repositório**. O banco em `estrutura/dataset/` é local e não entra no GitHub.
 
 ### Checklist do laboratório (Aula 03)
 
@@ -435,7 +435,7 @@ Números obtidos em R (`summary` / `sd`):
 | Desvio padrão | 35,43 |
 | Média / mediana | ≈ 2,73 |
 
-Figuras geradas em R (`par(pty = "s")`): PNGs na pasta [`graficos/ampla/`](graficos/ampla/); script [`modelo_graficos_analise_ampla.R`](modelo_graficos_analise_ampla.R).
+Figuras geradas em R (`par(pty = "s")`): PNGs na pasta [`graficos/02a/`](graficos/02a/); script [`02a-analise-exploratoria-ampla.R`](../estrutura/codigos/02a-analise-exploratoria-ampla.R).
 
 Não faça histograma de `CDTUP` nem boxplot de IMO (Aula 02: código não é número).
 
@@ -449,18 +449,18 @@ e o por grupo (mais informativo) é o gráfico 2.
 par(pty = "s")
 summary(t3)
 sd(t3, na.rm = TRUE)
-t3_cap <- t3[t3 <= quantile(t3, 0.99, na.rm = TRUE)]
-hist(t3_cap, breaks = 40, prob = TRUE,
+t3.cap <- t3[t3 <= quantile(t3, 0.99, na.rm = TRUE)]
+hist(t3.cap, breaks = 40, prob = TRUE,
      main = "T3 (ate P99)", xlab = "TOperacao (horas)", ylab = "Densidade")
-curve(dnorm(x, mean = mean(t3_cap), sd = sd(t3_cap)),
+curve(dnorm(x, mean = mean(t3.cap), sd = sd(t3.cap)),
       add = TRUE, lwd = 2)
 
 # boxplot univariado da mesma variavel (pedido do lab)
 par(pty = "s")
-boxplot(t3_cap, main = "T3 - boxplot", ylab = "TOperacao (horas)")
+boxplot(t3.cap, main = "T3 - boxplot", ylab = "TOperacao (horas)")
 ```
 
-![Histograma de T3 com densidade Normal](graficos/ampla/01_t3_hist_dnorm.png)
+![Histograma de T3 com densidade Normal](graficos/02a/01-t3-hist-dnorm.png)
 
 **Comentário.** A massa se concentra perto de 0-20 h e a cauda se estende. A curva Normal (mesma média e desvio) fica larga demais no centro e não acompanha o pico nem a cauda. A Normal **não** descreve T3.
 
@@ -477,7 +477,7 @@ boxplot(TOperacao ~ `Região Geográfica`, data = mc,
         xlab = "", ylab = "TOperacao (horas)")
 ```
 
-![Boxplot de T3 por região](graficos/ampla/02_t3_boxplot_regiao.png)
+![Boxplot de T3 por região](graficos/02a/02-t3-boxplot-regiao.png)
 
 **Comentário.** As medianas diferem por região (Norte mais curto por mix interior; Sudeste/Sul mais longos no perfil de granel e longo curso). A amostra **não** é i.i.d. entre portos (liga com a seção 6).
 
@@ -494,63 +494,63 @@ navegação × tonelagem, sazonalidade).
 
 | # | Arquivo | Tipo | Insight |
 |:-:|---|---|---|
-| 03 | `03_santos_escalas_mes.png` | barras + linha | sazonalidade das escalas no complexo |
-| 04 | `04_santos_navegacao.png` | barras % horizontais | domínio do longo curso nas escalas de carga |
-| 05 | `05_santos_t3_navegacao.png` | boxplot por grupo | T3 muda com o tipo de navegação |
-| 06 | `06_santos_top_bercos.png` | barras horizontais | concentração de escalas em poucos berços |
-| 07 | `07_santos_peso_natureza.png` | barras horizontais (Mt) | granel sólido lidera tonelagem; contêiner vem atrás |
-| 08 | `08_santos_sentido_peso.png` | barras (Mt) | mais peso embarcado que desembarcado (exportador) |
-| 09 | `09_santos_peso_vs_t3.png` | dispersão + `lm` | peso da escala × tempo de operação (prancha) |
-| 10 | `10_santos_vs_sudeste_t3.png` | densidades sobrepostas | Santos opera mais lento que o restante do Sudeste |
-| 11 | `11_santos_fila_mes.png` | série (mediana e P90) | fila (T1) ao longo do ano |
-| 12 | `12_santos_mes_navegacao.png` | mosaico | mix mês × navegação |
+| 03 | `03-santos-escalas-mes.png` | barras + linha | sazonalidade das escalas no complexo |
+| 04 | `04-santos-navegacao.png` | barras % horizontais | domínio do longo curso nas escalas de carga |
+| 05 | `05-santos-t3-navegacao.png` | boxplot por grupo | T3 muda com o tipo de navegação |
+| 06 | `06-santos-top-bercos.png` | barras horizontais | concentração de escalas em poucos berços |
+| 07 | `07-santos-peso-natureza.png` | barras horizontais (Mt) | granel sólido lidera tonelagem; contêiner vem atrás |
+| 08 | `08-santos-sentido-peso.png` | barras (Mt) | mais peso embarcado que desembarcado (exportador) |
+| 09 | `09-santos-peso-vs-t3.png` | dispersão + `lm` | peso da escala × tempo de operação (prancha) |
+| 10 | `10-santos-vs-sudeste-t3.png` | densidades sobrepostas | Santos opera mais lento que o restante do Sudeste |
+| 11 | `11-santos-fila-mes.png` | série (mediana e P90) | fila (T1) ao longo do ano |
+| 12 | `12-santos-mes-navegacao.png` | mosaico | mix mês × navegação |
 
-![Santos - escalas por mês](graficos/ampla/03_santos_escalas_mes.png)
+![Santos - escalas por mês](graficos/02a/03-santos-escalas-mes.png)
 
 **03.** Escalas relativamente estáveis no ano (linha + média tracejada). O pulso de
 Santos é comercial, não hidrológico como no Norte da Análise Exploratória nacional.
 
-![Santos - navegação](graficos/ampla/04_santos_navegacao.png)
+![Santos - navegação](graficos/02a/04-santos-navegacao.png)
 
 **04.** Nas escalas de carga, **longo curso** domina; cabotagem é secundária.
 Casa com a Análise Exploratória: tonelagem de Santos é comércio exterior.
 
-![Santos - T3 por navegação](graficos/ampla/05_santos_t3_navegacao.png)
+![Santos - T3 por navegação](graficos/02a/05-santos-t3-navegacao.png)
 
 **05.** T3 muda com a navegação. Misturar longo curso e cabotagem num único `lm`
 sem estratificar é o erro que a Análise Exploratória proíbe (não i.i.d.).
 
-![Santos - top berços](graficos/ampla/06_santos_top_bercos.png)
+![Santos - top berços](graficos/02a/06-santos-top-bercos.png)
 
 **06.** Poucos berços concentram muitas escalas. Validação deve considerar berço/`CDTUP`,
 não só "o porto" como bloco homogêneo.
 
-![Santos - peso por natureza](graficos/ampla/07_santos_peso_natureza.png)
+![Santos - peso por natureza](graficos/02a/07-santos-peso-natureza.png)
 
 **07.** Em toneladas, **granel sólido** lidera; contêiner é forte em TEU/linhas, mas
 não em Mt. Contar partidas ≠ contar peso (mesma leitura da Análise Exploratória, agora em Santos).
 
-![Santos - sentido do peso](graficos/ampla/08_santos_sentido_peso.png)
+![Santos - sentido do peso](graficos/02a/08-santos-sentido-peso.png)
 
 **08.** Peso **embarcado** (~127 Mt) >> **desembarcado** (~45 Mt): perfil
 **exportador em toneladas** no recorte 2024.
 
-![Santos - peso vs T3](graficos/ampla/09_santos_peso_vs_t3.png)
+![Santos - peso vs T3](graficos/02a/09-santos-peso-vs-t3.png)
 
 **09.** Em escala log, peso da escala e T3 andam juntos (reta `lm`), com nuvem larga.
 Bom candidato a \(Y=\log1p(T3)\) com \(\log1p(\text{peso})\) como \(X\).
 
-![Santos vs Sudeste - T3](graficos/ampla/10_santos_vs_sudeste_t3.png)
+![Santos vs Sudeste - T3](graficos/02a/10-santos-vs-sudeste-t3.png)
 
 **10.** Densidade de T3 em Santos fica à direita do demais Sudeste: mediana ~30 h vs
 ~23 h. Santos não é o "Sudeste médio" - é um regime próprio de fila e operação.
 
-![Santos - fila T1 no ano](graficos/ampla/11_santos_fila_mes.png)
+![Santos - fila T1 no ano](graficos/02a/11-santos-fila-mes.png)
 
 **11.** Mediana e P90 de T1 (espera) no calendário. Mediana = navio típico; P90 =
 regime de congestionamento (como na Análise Exploratória nacional: média/P90 ≠ mediana).
 
-![Santos - mês × navegação](graficos/ampla/12_santos_mes_navegacao.png)
+![Santos - mês × navegação](graficos/02a/12-santos-mes-navegacao.png)
 
 **12.** O mosaico mês × navegação mostra mix não uniforme no calendário. Partição
 temporal e dummies de mês importam antes de estimar \(f\).
@@ -625,7 +625,7 @@ ler <- function(f) fread(f, sep = ";", dec = ",", encoding = "UTF-8",
                          na.strings = c("", "n/a", "NA"))
 
 atrac <- rbindlist(lapply(2021:2025, function(a)
-  ler(file.path("DatasetMovimentacaoPortuaria", a, paste0(a, "Atracacao.txt")))))
+  ler(file.path("estrutura/dataset", a, paste0(a, "Atracacao.txt")))))
 
 # qualitativas
 table(atrac$`Tipo de Operação`, useNA = "ifany")

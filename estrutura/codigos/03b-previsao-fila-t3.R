@@ -1,5 +1,5 @@
 # Atividade 03 - Prever T3 para navios em T1 / T2 (mesmo modelo da regressao)
-# Na raiz: Rscript Atividades/atividade_03/modelo_previsao_fila_t3.R
+# Na raiz: Rscript estrutura/codigos/03b-previsao-fila-t3.R
 
 user_lib <- file.path(Sys.getenv("USERPROFILE"), "Documents", "R", "win-library", "4.6")
 dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
@@ -9,16 +9,16 @@ if (!requireNamespace("data.table", quietly = TRUE)) {
 }
 library(data.table)
 
-root <- if (file.exists("DatasetMovimentacaoPortuaria")) {
+root <- if (file.exists(file.path("estrutura", "dataset"))) {
   "."
-} else if (file.exists(file.path("..", "..", "DatasetMovimentacaoPortuaria"))) {
+} else if (file.exists(file.path("..", "..", "estrutura", "dataset"))) {
   file.path("..", "..")
 } else {
   stop("Rode na raiz do repositorio.")
 }
 setwd(root)
 
-out_dir <- file.path("Atividades", "atividade_03", "graficos")
+out_dir <- file.path("consolidados", "graficos", "03b")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 salvar <- function(nome, expr, mar = c(4.5, 4.5, 3.2, 1.2), w = 1000, h = 1000) {
@@ -38,9 +38,9 @@ ler <- function(f) {
         na.strings = c("", "n/a", "NA", "N/A"))
 }
 
-atrac  <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024Atracacao.txt"))
-tempos <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024TemposAtracacao.txt"))
-carga  <- ler(file.path("DatasetMovimentacaoPortuaria", "2024", "2024Carga.txt"))
+atrac  <- ler(file.path("estrutura", "dataset", "2024", "2024Atracacao.txt"))
+tempos <- ler(file.path("estrutura", "dataset", "2024", "2024TemposAtracacao.txt"))
+carga  <- ler(file.path("estrutura", "dataset", "2024", "2024Carga.txt"))
 
 for (cl in c("TOperacao", "TEsperaAtracacao", "TEsperaInicioOp")) {
   if (cl %in% names(tempos) && !is.numeric(tempos[[cl]])) {
@@ -103,14 +103,14 @@ plot_prev_real <- function(d, titulo, fname) {
   })
 }
 
-plot_prev_real(grp_t1, "T1 alto: previsto x real", "05_t1_previsto_vs_real.png")
-plot_prev_real(grp_t2, "T2 alto: previsto x real", "06_t2_previsto_vs_real.png")
+plot_prev_real(grp_t1, "T1 alto: previsto x real", "05-t1-previsto-vs-real.png")
+plot_prev_real(grp_t2, "T2 alto: previsto x real", "06-t2-previsto-vs-real.png")
 
 # exemplos escritos (navio tipico de cada grupo)
 ex_t1 <- grp_t1[order(-T1)][1]
 ex_t2 <- grp_t2[order(-T2)][1]
 
-salvar("07_exemplos_t1_t2.png", {
+salvar("07-exemplos-t1-t2.png", {
   par(mfrow = c(1, 2), mar = c(4.5, 4.5, 3.2, 1.2))
   barplot(c(ex_t1$T3_pred, ex_t1$T3), names.arg = c("Previsto", "Real"),
           col = c(azul, laranja), border = NA,
@@ -124,7 +124,7 @@ salvar("07_exemplos_t1_t2.png", {
 
 mae <- function(d) mean(abs(d$T3 - d$T3_pred), na.rm = TRUE)
 
-sink(file.path("Atividades", "atividade_03", "_numeros_previsao.txt"))
+sink(file.path("estrutura", "codigos", "03b-numeros.txt"))
 cat("n_total=", nrow(esc_m), "\n", sep = "")
 cat("med_T1=", med_t1, " med_T2=", med_t2, "\n", sep = "")
 print(coef(m))
