@@ -46,20 +46,20 @@ ajuste só no treino.
 
 Equações (ainda regressão linear nos coeficientes β):
 
-\[
+$$
 \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x
-\quad \text{(grau 1)}
-\]
+\qquad \text{(grau 1)}
+$$
 
-\[
-\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x + \hat{\beta}_2 x^2 + \hat{\beta}_3 x^3
-\quad \text{(grau 3)}
-\]
+$$
+\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x + \hat{\beta}_2 x^{2} + \hat{\beta}_3 x^{3}
+\qquad \text{(grau 3)}
+$$
 
-\[
+$$
 \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x + \cdots + \hat{\beta}_{12} x^{12}
-\quad \text{(grau 12)}
-\]
+\qquad \text{(grau 12)}
+$$
 
 ```r
 lm(y ~ poly(log.peso, 1), data = tr)
@@ -85,12 +85,13 @@ Treino só cai. Teste cai do 1 ao 3 e **explode** no 12: sobreajuste, igual
 
 Forma matricial (grau g):
 
-\[
+$$
 \mathbf{y} = X\boldsymbol{\beta} + \boldsymbol{\varepsilon}
-\]
+$$
 
-Cada linha de X é (1, xᵢ, xᵢ², …, xᵢᵍ). O estimador é o mesmo da Aula 04.
-Usamos `poly` ortogonal (padrão do R) para estabilidade em grau alto.
+Cada linha de X é $(1,\ x_i,\ x_i^{2},\ \ldots,\ x_i^{g})$. O estimador é o
+mesmo da Aula 04. Usamos `poly` ortogonal (padrão do R) para estabilidade
+em grau alto.
 
 ---
 
@@ -155,11 +156,13 @@ n = 5.681 estes dois modelos não estão decorando a amostra.
 
 Coeficientes do m2 no treino:
 
-\[
-\widehat{\log(1+\mathrm{T3})}
+$$
+\widehat{\log(1 + \mathrm{T3})}
 =
-0{,}297 + 0{,}353\,\log(1+\mathrm{peso}) - 0{,}107\,\log(1+\mathrm{TEU})
-\]
+0{,}297
++ 0{,}353 \cdot \log(1 + \mathrm{peso})
+- 0{,}107 \cdot \log(1 + \mathrm{TEU})
+$$
 
 ### Reta no treino e no teste (mesmo ajuste)
 
@@ -187,23 +190,23 @@ mas ainda é ordem de grandeza, não horário fechado.
 - **Viés alto:** modelo rígido (grau 1) não acompanha a curvatura.
 - **Variância alta:** modelo flexível demais (grau 12) muda com o ruído.
 
-Decomposição do erro esperado em um ponto x₀:
+Decomposição do erro esperado em um ponto $x_0$:
 
-\[
-E[(y_0 - \hat{f}(x_0))^2]
+$$
+E\bigl[(y_0 - \hat{f}(x_0))^2\bigr]
 =
-Var(\hat{f}(x_0))
+\mathrm{Var}\bigl(\hat{f}(x_0)\bigr)
 +
-[Bias(\hat{f}(x_0))]^2
+\left[\mathrm{Bias}\bigl(\hat{f}(x_0)\bigr)\right]^2
 +
-Var(\varepsilon)
-\]
+\mathrm{Var}(\varepsilon)
+$$
 
 Exemplo numérico da aula:
 
-\[
+$$
 0{,}04 + (0{,}3)^2 + 0{,}02 = 0{,}04 + 0{,}09 + 0{,}02 = 0{,}15
-\]
+$$
 
 Domina o viés → aumentar um pouco a flexibilidade.
 
@@ -225,17 +228,21 @@ escalas.
 | RMSE = √MSE | erro típico na escala log(1 + T3) |
 | MAE | erro médio em **horas** de T3 (língua do porto) |
 
-Conta rápida (exercício da aula): y = (10, 12, 15), ŷ = (11, 11, 16).
+Conta rápida (exercício da aula): $y = (10,\ 12,\ 15)$, $\hat{y} = (11,\ 11,\ 16)$.
 
-\[
+$$
 \mathrm{MSE}
 =
-\frac{1^2 + (-1)^2 + 1^2}{3}
+\frac{1^{2} + (-1)^{2} + 1^{2}}{3}
+=
+\frac{3}{3}
 =
 1
-\qquad
-\mathrm{RMSE} = \sqrt{1} = 1
-\]
+$$
+
+$$
+\mathrm{RMSE} = \sqrt{\mathrm{MSE}} = \sqrt{1} = 1
+$$
 
 ---
 
