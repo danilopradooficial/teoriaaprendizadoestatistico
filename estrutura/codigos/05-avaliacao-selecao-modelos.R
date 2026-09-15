@@ -146,7 +146,30 @@ salvar("02-rmse-treino-teste.png", {
   text(bp, mat, sprintf("%.3f", mat), pos = 3, cex = 0.8)
 })
 
-salvar("03-previsto-vs-real-teste.png", {
+# regressao: mesma reta (m1) no treino e no teste (molde da aula)
+salvar("03-reta-treino-teste.png", {
+  set.seed(1)
+  layout(matrix(c(1, 2), 1, 2), widths = c(1, 1))
+  par(pty = "s", mar = c(4.5, 4.5, 3.2, 1.2))
+  i.tr <- sample.int(nrow(tr), min(2500L, nrow(tr)))
+  i.te <- sample.int(nrow(te), min(1500L, nrow(te)))
+  lim.x <- range(c(tr$log.peso, te$log.peso))
+  lim.y <- range(c(tr$y, te$y))
+  plot(tr$log.peso[i.tr], tr$y[i.tr],
+       pch = 19, cex = 0.35, col = rgb(46/255, 125/255, 79/255, 0.35),
+       xlim = lim.x, ylim = lim.y,
+       main = "Treino (70%)",
+       xlab = "log1p(peso)", ylab = "log1p(T3)")
+  abline(m1, col = laranja, lwd = 2)
+  plot(te$log.peso[i.te], te$y[i.te],
+       pch = 19, cex = 0.35, col = rgb(196/255, 92/255, 38/255, 0.35),
+       xlim = lim.x, ylim = lim.y,
+       main = "Teste (30%) - mesma reta",
+       xlab = "log1p(peso)", ylab = "log1p(T3)")
+  abline(m1, col = azul, lwd = 2)
+}, w = 1600, h = 800, mar = c(4.5, 4.5, 3.2, 1))
+
+salvar("04-previsto-vs-real-teste.png", {
   set.seed(1)
   pred2 <- expm1(predict(m2, te))
   idx <- sample.int(nrow(te), min(2500L, nrow(te)))
@@ -167,7 +190,7 @@ for (g in graus) {
 }
 g.best <- which.min(ete)
 
-salvar("04-curva-u-grau.png", {
+salvar("05-curva-u-grau.png", {
   matplot(graus, cbind(etr, ete), type = "l", lwd = 3, lty = 1,
           col = c(verde, laranja),
           xlab = "grau (flexibilidade)", ylab = "MSE",
