@@ -1,12 +1,21 @@
 n=5681
 n.treino=3977 n.teste=1704
 seed=1 prop.treino=0.7
+Y=log1p(T3) X1=log1p(peso) X2=log1p(teu)
 
-=== RMSE treino (log1p) ===
+=== tres graus (slide): MSE treino ===
+    grau1     grau3    grau12 
+0.4568328 0.4492009 0.4447077 
+
+=== tres graus (slide): MSE teste ===
+    grau1     grau3    grau12 
+0.4695361 0.4588457 4.6170646 
+
+=== laboratorio m1 vs m2: RMSE treino ===
        m1        m2 
 0.6758941 0.5515802 
 
-=== RMSE teste (log1p) ===
+=== laboratorio m1 vs m2: RMSE teste ===
        m1        m2 
 0.6852271 0.5500615 
 
@@ -20,7 +29,9 @@ vencedor=m2
 (Intercept)    log.peso     log.teu 
   0.2967638   0.3526114  -0.1073069 
 
-=== curva U: MSE teste por grau ===
-    grau1     grau2     grau3     grau4     grau5     grau6 
-0.4695361 0.4679629 0.4588457 0.4573803 0.4575310 0.4572733 
-grau.melhor.u=6
+=== curva U: MSE teste por grau 1..12 ===
+    grau1     grau2     grau3     grau4     grau5     grau6     grau7     grau8 
+0.4695361 0.4679629 0.4588457 0.4573803 0.4575310 0.4572733 0.4565611 0.4565744 
+    grau9    grau10    grau11    grau12 
+0.4766389 0.4840932 1.1405098 4.6170646 
+grau.melhor.u=7
