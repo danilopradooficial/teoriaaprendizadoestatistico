@@ -20,6 +20,7 @@ Números: [`06-numeros.txt`](../estrutura/codigos/06-numeros.txt).
 | 03a | Reta de T3 | tonelagem e TEU |
 | 05 | Treino / teste | RMSE e escolha única |
 | 06 | Reamostragem | **esta entrega**: CV(5) + bootstrap |
+| 07 | Expandir e frear | [Ridge / Lasso](07-expansao-regularizacao.md) |
 
 ---
 
@@ -146,7 +147,7 @@ do laboratório é comparar candidatos e qualificar o coeficiente.
 2. Bootstrap: coef. de `log.peso` ≈ 0,36; IC 95% 0,345-0,378; longe de zero.
 3. Reamostrar responde duas perguntas: **qual método** (CV) e **quanta
    incerteza no número** (bootstrap).
-4. Próxima aula do curso: freio na flexibilidade (regularização).
+4. Próxima aula do curso: freio na flexibilidade ([07 - expansão e regularização](07-expansao-regularizacao.md)).
 
 ---
 

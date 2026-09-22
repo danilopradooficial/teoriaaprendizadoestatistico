@@ -77,7 +77,8 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 │       ├── 03b-previsao-fila-t3.R
 │       ├── 04-regressao-logistica.R
 │       ├── 05-avaliacao-selecao-modelos.R
-│       └── 06-metodos-reamostragem.R
+│       ├── 06-metodos-reamostragem.R
+│       └── 07-expansao-regularizacao.R
 ├── consolidados/                 # todas as entregas .md
 │   ├── 01-dicionario-variaveis.md
 │   ├── 02a-analise-exploratoria-ampla.md
@@ -87,6 +88,7 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 │   ├── 04-regressao-logistica.md
 │   ├── 05-avaliacao-selecao-modelos.md
 │   ├── 06-metodos-reamostragem.md
+│   ├── 07-expansao-regularizacao.md
 │   └── graficos/
 ├── materiais-aulas/              # PDFs das aulas
 └── to-delete-trash/              # pasta antiga Atividades/ (lixo)
@@ -114,8 +116,9 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 | 04 | [04-regressao-logistica.md](consolidados/04-regressao-logistica.md) | `04-regressao-logistica.R` | Aula 05 |
 | 05 | [05-avaliacao-selecao-modelos.md](consolidados/05-avaliacao-selecao-modelos.md) | `05-avaliacao-selecao-modelos.R` | Aula 06 |
 | 06 | [06-metodos-reamostragem.md](consolidados/06-metodos-reamostragem.md) | `06-metodos-reamostragem.R` | Aula 07 |
+| 07 | [07-expansao-regularizacao.md](consolidados/07-expansao-regularizacao.md) | `07-expansao-regularizacao.R` | Aula 08 |
 
-Funil: dicionário → Análise Exploratória → T3 (horas) → T3 (sim/não) → escolha por teste → CV e bootstrap.
+Funil: dicionário → Análise Exploratória → T3 → escolha → CV/bootstrap → expansão e regularização.
 
 ---
 
@@ -132,7 +135,8 @@ Rscript estrutura/codigos/03b-previsao-fila-t3.R
 Rscript estrutura/codigos/04-regressao-logistica.R
 Rscript estrutura/codigos/05-avaliacao-selecao-modelos.R
 Rscript estrutura/codigos/06-metodos-reamostragem.R
+Rscript estrutura/codigos/07-expansao-regularizacao.R
 ```
 
 Os scripts leem `estrutura/dataset` e gravam PNGs em `consolidados/graficos/`.
-O nome casa em tudo: `05-avaliacao-selecao-modelos.R`, `05-avaliacao-selecao-modelos.md` e `05-numeros.txt` (o mesmo vale para 01-06).
+O nome casa em tudo: `07-expansao-regularizacao.R`, `07-expansao-regularizacao.md` e `07-numeros.txt` (o mesmo vale para 01-07).
