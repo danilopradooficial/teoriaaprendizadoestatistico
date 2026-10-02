@@ -1,0 +1,9 @@
+n_total=5681
+med_T1=28.38333 med_T2=2.266667
+(Intercept)    log_peso     log_teu 
+  0.2169865   0.3613714  -0.1087916 
+R2_modelo=0.5132514
+n_T1=2802 mae_T1=19.92239 med_T3=36.44167 med_pred=43.51567
+n_T2=2501 mae_T2=18.58125 med_T3=31.53333 med_pred=37.72488
+ex_t1_peso=55773 teu=0 T1=1036 T3=46.33333 pred=63.48527
+ex_t2_peso=21514.16 teu=0 T2=62.25 T3=118.05 pred=44.70522

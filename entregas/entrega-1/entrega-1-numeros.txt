@@ -1,0 +1,50 @@
+escalas Santos mov. carga com T3=5739
+com carga (peso>0)=5739 P99 T3=172.9 h
+n final=5681 n sem faltantes=5681
+p colunas=7 p dummies=30
+sd(T3)=32.81321 media=41.21468 mediana=30.05
+
+=== correlacao |r| com T3, todas as colunas numericas ===
+dur.datas TAtracado  TEstadia    peso.t       teu    n.part        T1        T2 
+   1.0000    0.9677    0.4138    0.3954    0.3154    0.2238    0.2129    0.1509 
+       T4 
+   0.1206 
+
+=== correlacao |r| com T3, so preditores legitimos ===
+ log.teu log.part log.peso 
+  0.4932   0.3804   0.3673 
+
+=== faltantes ===
+       T1        T2        T4 TAtracado  TEstadia 
+       78       684        79         3        73 
+
+=== balanco T3 > 24 h ===
+
+   0    1 
+2226 3455 
+
+     0      1 
+0.3918 0.6082 
+
+=== CV(5) media (dp) ===
+          medida        media          dp
+          <char>        <num>       <num>
+ 1:    rmse.base   32.8166695 0.650918945
+ 2:    rmse.lm.h   23.7296229 0.643366153
+ 3:  rmse.lm.log   24.0274740 0.804054612
+ 4:     mae.base   25.3742092 0.351143105
+ 5:     mae.lm.h   16.4402519 0.378126282
+ 6:   mae.lm.log   15.9939743 0.545538013
+ 7:     acc.base    0.6081689 0.016989094
+ 8:      acc.glm    0.8399948 0.014415268
+ 9:     auc.base    0.5000000 0.000000000
+10:      auc.glm    0.9153418 0.009262376
+11: acc.lm.corte    0.8093666 0.013593239
+12: auc.lm.corte    0.8992962 0.010163731
+13:      n.bruto 5739.0000000          NA
+14:          q99  172.8960000          NA
+15:        corte   24.0000000          NA
+16:            k    5.0000000          NA
+
+ganho RMSE P1 sobre a base=27.7%
+ganho acuracia P2 sobre a base=23.2 p.p.

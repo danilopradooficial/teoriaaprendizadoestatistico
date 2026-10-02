@@ -1,0 +1,306 @@
+% ==========================================================
+% ENTREGA 1 - A pergunta do trabalho
+% Teoria do Aprendizado Estatístico - Ciência de Dados
+% Fatec Baixada Santista - Rubens Lara
+% Equipe Shannon
+% ==========================================================
+%
+% COMO COMPILAR
+%   1. Na raiz: Rscript entregas/entrega-1/entrega-1-pergunta.R
+%      (gera entrega-1-escalas.csv e entrega-1-resultados.csv nesta pasta)
+%   2. Em entregas/entrega-1/: Rscript -e "knitr::knit2pdf('entrega-1-pergunta.Rnw', bib_engine = 'bibtex')"
+% ==========================================================
+
+\documentclass[
+  article,
+  12pt,
+  oneside,
+  a4paper,
+  english,
+  brazil
+]{abntex2}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{icomma}
+\usepackage{booktabs}
+\usepackage[alf]{abntex2cite}
+
+\hypersetup{hidelinks}
+
+% ----------------------------------------------------------
+% DADOS DA ENTREGA
+% ----------------------------------------------------------
+\titulo{A pergunta do trabalho: \textit{quantas horas um navio vai operar no berço no Porto de Santos?}}
+\tituloestrangeiro{}
+\autor{Equipe Shannon}
+\local{Santos-SP}
+\data{\today}
+
+\newcommand{\nomecurso}{Tecnologia em Ciência de Dados}
+\newcommand{\nomedisciplina}{Teoria do Aprendizado Estatístico}
+\newcommand{\nomeprofessor}{Prof.\ Dr.\ João Paulo Ferreira de Mello}
+\newcommand{\repositorio}{teoriaaprendizadoestatistico}
+\newcommand{\integrantes}{%
+  Adriane da Costa Santos (RA 0051352511040) \quad
+  Danilo Prado de Lima Silva (RA 0051352521019) \\
+  Victória Cabral Quintério (RA 0051352521033)%
+}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+  echo       = FALSE,   # o codigo mora em entrega-1-pergunta.R
+  message    = FALSE,
+  warning    = FALSE,
+  fig.align  = "center",
+  out.width  = "0.62\\linewidth",
+  fig.width  = 5.6,
+  fig.height = 2.1
+)
+options(OutDec = ",", digits = 4)
+@
+
+<<dados, include=FALSE>>=
+# REGRA: nada de acento dentro de string de R; acento so em LaTeX.
+esc <- read.csv("entrega-1-escalas.csv")
+res <- read.csv("entrega-1-resultados.csv")
+r   <- setNames(res$media, res$medida)
+rdp <- setNames(res$dp, res$medida)
+
+f1 <- function(x, d = 1) formatC(x, format = "f", digits = d, big.mark = ".", decimal.mark = ",")
+f0 <- function(x) formatC(x, format = "d", big.mark = ".")
+
+y      <- esc$T3
+n      <- nrow(esc)
+p.col  <- 7
+mm     <- model.matrix(~ log1p(peso.t) + log1p(teu) + log1p(n.part) +
+                         natureza + navegacao + terminal + factor(mes), data = esc)
+p.dum  <- ncol(mm) - 1
+n.por.p <- n / (p.dum + 1)
+
+# --- vazamento: correlacao de todas as colunas numericas com T3 ---------
+vaz  <- c("dur.datas", "TAtracado", "TEstadia", "T1", "T2", "T4")
+cc   <- abs(cor(esc[, c("T3", "peso.t", "teu", "n.part", vaz)],
+                use = "pairwise.complete.obs")[, "T3"])
+cc   <- sort(cc[names(cc) != "T3"], decreasing = TRUE)
+leg  <- data.frame(log.teu = log1p(esc$teu), log.part = log1p(esc$n.part),
+                   log.peso = log1p(esc$peso.t))
+cl   <- sort(abs(cor(leg, y)[, 1]), decreasing = TRUE)
+tt   <- function(nm) paste0("\\texttt{", nm, "}")
+
+# --- balanco (pergunta 2) e faltantes ------------------------------------
+corte  <- r["corte"]
+longa  <- sum(y > corte)
+curta  <- n - longa
+falt   <- colSums(is.na(esc))
+falt   <- sort(falt[falt > 0], decreasing = TRUE)
+texto.falt <- paste(paste0(tt(names(falt)), " ", f0(falt)), collapse = "; ")
+falt.pred  <- sum(is.na(esc[, c("peso.t", "teu", "n.part", "natureza",
+                                "navegacao", "terminal", "mes")]))
+ganho1 <- 100 * (1 - r["rmse.lm.h"] / r["rmse.base"])
+@
+
+\selectlanguage{brazil}
+\frenchspacing
+
+\begin{center}
+  \SingleSpacing
+  {\Large \imprimirtitulo \par}
+  \vspace{0.8em}
+  {\large \imprimirautor \par}
+  \vspace{0.3em}
+  \imprimirlocal, \imprimirdata
+\end{center}
+
+\begin{center}
+  \small
+  \SingleSpacing
+  Fatec Baixada Santista, Rubens Lara \quad|\quad \nomecurso{} \\
+  \nomedisciplina{} \quad|\quad \nomeprofessor{} \\[0.3em]
+  {\footnotesize \integrantes} \\[0.3em]
+  Repositório: \texttt{\repositorio}
+\end{center}
+
+\textual
+
+% ==========================================================================
+\section{Introdução}
+% ==========================================================================
+
+A capacidade do Porto de Santos, o maior da América Latina, depende do tempo em
+que cada berço fica ocupado. Este texto apresenta o banco, formula a pergunta do
+semestre e a defende: como propõe \citeonline{james2021}, duas candidatas foram
+comparadas com uma linha de base por validação cruzada e escolhidas pelos números.
+
+% ==========================================================================
+\section{O banco de dados e o problema}
+% ==========================================================================
+
+Os dados vêm do Estatístico Aquaviário da ANTAQ \cite{antaq2025}: tabelas
+\emph{Atracação}, \emph{Tempos de Atracação} e \emph{Carga} de 2024, ligadas
+por \texttt{IDAtracacao}, com a carga agregada por escala (peso bruto, TEU,
+partidas e natureza predominante). Cada linha é uma \textbf{escala}: uma
+atracação para movimentação de carga no Complexo Portuário de Santos. Das $\Sexpr{f0(r["n.bruto"])}$ escalas com
+tempo de operação registrado, ficaram as que não passam do percentil 99
+($\Sexpr{f1(r["q99"])}$~h): $n = \Sexpr{f0(n)}$ escalas e
+$p = \Sexpr{p.col}$ preditores candidatos. A resposta é \texttt{TOperacao}
+(T3), o tempo entre o início e o término da movimentação de carga.
+
+O banco é público, granular e da região da Fatec. O \emph{problema} é a
+programação de berços: as janelas de atracação dependem de estimativas de
+duração, e um erro de horas se propaga para a fila seguinte.
+
+% ==========================================================================
+\section{A pergunta}
+% ==========================================================================
+
+A pergunta do trabalho é: \textbf{quando um navio é programado para atracar em
+Santos, quantas horas ele vai operar no berço?} A pergunta concorrente, menos
+ambiciosa, é se essa operação vai passar de $\Sexpr{f0(corte)}$ horas. A
+Tabela~\ref{tab:ficha} detalha os sete campos de cada uma.
+
+\begin{table}[htb]
+  \centering
+  \SingleSpacing
+  \caption{Ficha das duas perguntas candidatas}
+  \label{tab:ficha}
+  \footnotesize
+  \begin{tabular}{@{}p{0.15\textwidth}p{0.44\textwidth}p{0.37\textwidth}@{}}
+    \toprule
+    \textbf{Campo} & \textbf{Pergunta 1 (escolhida)} & \textbf{Pergunta 2} \\
+    \midrule
+    1. Pergunta & Quantas horas o navio vai operar no berço? &
+      A operação passará de $\Sexpr{f0(corte)}$~h? \\
+    2. Resposta $Y$ & \texttt{TOperacao} (T3), quantitativa, em horas &
+      $\mathbf{1}\{\mathrm{T3} > \Sexpr{f0(corte)}\}$, binária \\
+    3. Preditores $X$ & log de peso, TEU e partidas; natureza; navegação; terminal; mês ($p = \Sexpr{p.dum}$) &
+      os mesmos da Pergunta 1 \\
+    4. Tipo & supervisionado; regressão; predição &
+      supervisionado; classificação; predição \\
+    5. Métrica & RMSE em horas (apoio: MAE) & AUC (apoio: acurácia) \\
+    6. Base & média do treino: RMSE $= \Sexpr{f1(r["rmse.base"])}$~h &
+      classe comum: acur. $\Sexpr{f1(r["acc.base"], 3)}$; AUC $0{,}5$ \\
+    7. Dono & Autoridade Portuária e terminais: a janela &
+      os mesmos: reservar mais de um dia? \\
+    \bottomrule
+  \end{tabular}
+  \fonte{Elaborada pelos autores.}
+\end{table}
+
+Quem programa o berço precisa de horas, não de um rótulo (regressão), e quer
+acertar navios que ainda não chegaram, não interpretar coeficientes
+(\emph{predição}) \cite{james2021}. Por isso só entra em $X$ o que já se conhece
+na programação, restrição que guia a Seção~\ref{sec:defesa}.
+
+% ==========================================================================
+\section{Defesa da pergunta}
+\label{sec:defesa}
+% ==========================================================================
+
+\begin{table}[htb]
+  \centering
+  \SingleSpacing
+  \caption{Diagnóstico do banco}
+  \label{tab:diag}
+  \footnotesize
+  \begin{tabular}{@{}p{0.30\textwidth}p{0.64\textwidth}@{}}
+    \toprule
+    \textbf{Verificação} & \textbf{Resultado} \\
+    \midrule
+    Tamanho ($n \times p$) & $\Sexpr{f0(n)} \times \Sexpr{p.col}$ ($\Sexpr{p.dum}$
+      com \textit{dummies}; $\approx \Sexpr{f0(round(n.por.p))}$ obs. por parâmetro) \\
+    Maior correlação com $Y$ & \Sexpr{tt(names(cc)[1])} $\Sexpr{f1(cc[1], 3)}$;
+      \Sexpr{tt(names(cc)[2])} $\Sexpr{f1(cc[2], 3)}$; depois:
+      \Sexpr{tt(names(cl)[1])} $\Sexpr{f1(cl[1], 3)}$ \\
+    Balanço (Pergunta 2) & longas $\Sexpr{f0(longa)}$
+      ($\Sexpr{f1(100 * longa / n)}$\%); curtas $\Sexpr{f0(curta)}$
+      ($\Sexpr{f1(100 * curta / n)}$\%) \\
+    Valores faltantes & \Sexpr{texto.falt} (preditores: $\Sexpr{f0(falt.pred)}$) \\
+    \bottomrule
+  \end{tabular}
+  \fonte{Elaborada pelos autores.}
+\end{table}
+
+\textbf{Vazamento.} Na Tabela~\ref{tab:diag}, a maior correlação é 1: \texttt{dur.datas},
+diferença entre as datas de término e de início da operação, é o próprio T3.
+\texttt{TAtracado} soma T2, T3 e T4 e também contém a resposta. Ambas saíram,
+com \texttt{TEstadia}; T1, T2 e T4 também saíram, pois só são conhecidos depois
+da chegada do navio (vazamento temporal). Sem elas, a maior correlação cai para
+$\Sexpr{f1(cl[1], 3)}$ (\texttt{log.teu}), relação física esperada: mais
+contêineres exigem mais movimentos de guindaste.
+
+\textbf{Tamanho, balanço e faltantes.} Com $\approx
+\Sexpr{f0(round(n.por.p))}$ observações por parâmetro, o ajuste por mínimos
+quadrados é estável. As classes da Pergunta 2 ficam perto de 60/40, mas a
+acurácia de $\Sexpr{f1(r["acc.base"], 3)}$ sai sem modelo, o que justifica a
+AUC \cite{bruce2020}. Os faltantes estão só nas colunas descartadas (T2:
+$\Sexpr{f1(100 * falt["T2"] / n)}$\%); não houve imputação.
+
+\begin{table}[htb]
+  \centering
+  \SingleSpacing
+  \caption{Validação cruzada ($k = \Sexpr{f0(r["k"])}$): média entre dobras (desvio padrão)}
+  \label{tab:cv}
+  \footnotesize
+  \begin{tabular}{@{}llcc@{}}
+    \toprule
+    \textbf{Pergunta} & \textbf{Modelo} & \textbf{Métrica principal} & \textbf{Apoio} \\
+    \midrule
+    1 (RMSE, MAE em h) & linha de base: média & $\Sexpr{f1(r["rmse.base"])}$ ($\Sexpr{f1(rdp["rmse.base"])}$) & $\Sexpr{f1(r["mae.base"])}$ \\
+      & \texttt{lm} em horas & $\mathbf{\Sexpr{f1(r["rmse.lm.h"])}}$ ($\Sexpr{f1(rdp["rmse.lm.h"])}$) & $\Sexpr{f1(r["mae.lm.h"])}$ \\
+    \midrule
+    2 (AUC, acurácia) & linha de base: classe comum & $0{,}500$ & $\Sexpr{f1(r["acc.base"], 3)}$ \\
+      & \texttt{glm} logístico & $\mathbf{\Sexpr{f1(r["auc.glm"], 3)}}$ ($\Sexpr{f1(rdp["auc.glm"], 3)}$) & $\Sexpr{f1(r["acc.glm"], 3)}$ \\
+      & \texttt{lm} da Pergunta 1 cortado em $\Sexpr{f0(corte)}$~h & $\Sexpr{f1(r["auc.lm.corte"], 3)}$ ($\Sexpr{f1(rdp["auc.lm.corte"], 3)}$) & $\Sexpr{f1(r["acc.lm.corte"], 3)}$ \\
+    \bottomrule
+  \end{tabular}
+  \fonte{Elaborada pelos autores. Mesmas dobras (semente 1) em todos os modelos; base reestimada em cada dobra.}
+\end{table}
+
+A resposta é assimétrica (Figura~\ref{fig:resposta}; média de
+$\Sexpr{f1(mean(y))}$~h, mediana de $\Sexpr{f1(median(y))}$~h), e o RMSE em
+horas penaliza justamente as operações longas, que mais pesam na fila.
+
+\begin{figure}[htb]
+  \centering
+  \caption{Distribuição do tempo de operação T3 nas escalas de Santos em 2024}
+  \label{fig:resposta}
+<<fig-resposta>>=
+par(mar = c(3.8, 4, 0.5, 0.5), las = 1)
+hist(y, breaks = 40, col = "#D6EAF3", border = "white",
+     main = "", xlab = "T3 (horas)", ylab = "escalas")
+abline(v = median(y), col = "grey40", lwd = 1.5, lty = 3)
+abline(v = corte, col = "#C45C26", lwd = 2, lty = 2)
+abline(v = mean(y), col = "#2C5F8A", lwd = 2)
+legend("topright", bty = "n", cex = 0.85,
+       legend = c("media", "mediana", paste0("corte da Pergunta 2 (", corte, " h)")),
+       col = c("#2C5F8A", "grey40", "#C45C26"), lwd = c(2, 1.5, 2), lty = c(1, 3, 2))
+@
+  \fonte{Elaborada pelos autores.}
+\end{figure}
+
+\textbf{Escolha.} As duas batem as suas bases: o \texttt{lm} reduz o RMSE em
+$\Sexpr{f1(ganho1)}$\% e o \texttt{glm} chega a AUC
+$\Sexpr{f1(r["auc.glm"], 3)}$. Decide a última linha da Tabela~\ref{tab:cv}:
+cortada em $\Sexpr{f0(corte)}$~h, a previsão da Pergunta 1 dá AUC
+$\Sexpr{f1(r["auc.lm.corte"], 3)}$, só
+$\Sexpr{f1(r["auc.glm"] - r["auc.lm.corte"], 3)}$ abaixo. A Pergunta 1 contém
+a 2 a custo pequeno, e o contrário não vale, pois um rótulo não devolve horas.
+Por isso a Pergunta 1 foi escolhida.
+
+\textbf{Veredito.} A pergunta se sustenta, e o descarte de vazamento a refinou:
+de \emph{quanto tempo o navio opera} para \emph{quanto tempo vai operar, dado o
+que se sabe na programação}. Ela é \textbf{provisória}: após a Aula 12, árvores
+e \textit{ensembles} podem captar interações entre terminal e natureza da carga,
+e uma validação temporal pode revelar otimismo na validação cruzada aleatória.
+
+\postextual
+{\SingleSpacing\small
+\bibliography{referencias}}
+
+\end{document}

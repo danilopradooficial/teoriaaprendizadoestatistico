@@ -1,0 +1,80 @@
+n=5681 p=24
+seed=1
+preditores=log.peso | log.teu | log.peso.2 | log.teu.2 | peso.x.teu | log.part | log.peso.gemea | mesfev | mesmar | mesabr | mesmai | mesjun | mesjul | mesago | messet | mesout | mesnov | mesdez | navegacaoApoio Portuário | navegacaoCabotagem | navegacaoLongo Curso | natureza.gCarga Geral | natureza.gGranel Líquido e Gasoso | natureza.gGranel Sólido
+
+=== MQO (treino, expansao completa) ===
+R2=0.5646957
+RMSE.treino=0.5210756
+
+=== Lasso CV ===
+lambda.min=5.898473e-05
+lambda.1se=0.002674886
+CV.mse.min=0.2747403 CV.rmse.min=0.5241567
+CV.mse.1se=0.2784517 CV.rmse.1se=0.5276852
+nzero.min=24 nzero.1se=19
+CV.sd.min=0.004034226
+limiar.1se=0.2787745
+
+=== sobreviventes lambda.1se ===
+20 x 1 sparse Matrix of class "dgCMatrix"
+                                  lambda.1se
+(Intercept)                          -0.5220
+log.peso                              0.1438
+log.teu                              -0.0742
+log.teu.2                             0.0077
+log.part                              0.0095
+log.peso.gemea                        0.2112
+mesmar                               -0.0113
+mesabr                               -0.0724
+mesmai                               -0.0399
+mesjun                               -0.0569
+mesago                               -0.0310
+messet                                0.0180
+mesout                                0.0489
+mesnov                               -0.0089
+mesdez                                0.0907
+navegacaoCabotagem                   -0.1556
+navegacaoLongo Curso                  0.0995
+natureza.gCarga Geral                 0.7150
+natureza.gGranel Líquido e Gasoso     0.9108
+natureza.gGranel Sólido               0.6452
+
+=== sobreviventes lambda.min ===
+25 x 1 sparse Matrix of class "dgCMatrix"
+                                  lambda.min
+(Intercept)                          -1.6882
+log.peso                              0.1347
+log.teu                              -0.1577
+log.peso.2                           -0.0159
+log.teu.2                             0.0299
+peso.x.teu                           -0.0073
+log.part                              0.0071
+log.peso.gemea                        0.4766
+mesfev                               -0.0455
+mesmar                               -0.0540
+mesabr                               -0.1163
+mesmai                               -0.0887
+mesjun                               -0.1061
+mesjul                               -0.0463
+mesago                               -0.0882
+messet                               -0.0181
+mesout                                0.0170
+mesnov                               -0.0643
+mesdez                                0.0582
+navegacaoApoio Portuário              0.1330
+navegacaoCabotagem                    0.0005
+navegacaoLongo Curso                  0.2612
+natureza.gCarga Geral                 0.8291
+natureza.gGranel Líquido e Gasoso     0.9753
+natureza.gGranel Sólido               0.7823
+
+=== Ridge CV ===
+lambda.min=0.04065589 CV.mse.min=0.284077
+
+=== Elastic Net alpha=0.5 ===
+lambda.min=8.131178e-05 CV.mse.min=0.2744521
+
+=== placar CV mse minimo ===
+lasso=0.2747403 ridge=0.284077 elastic=0.2744521
+
+cor.log.peso.gemea=0.9998397

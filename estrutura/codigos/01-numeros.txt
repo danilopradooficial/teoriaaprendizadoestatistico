@@ -1,0 +1,31 @@
+ano=2024 n_atrac=106834 n_escala=106834
+
+=== class (depois da tipagem) ===
+             IDAtracacao                    CDTUP                      Mes 
+             "character"              "character"         "ordered/factor" 
+        Tipo de Operação Nacionalidade do Armador  FlagMCOperacaoAtracacao 
+                "factor"                 "factor"                "integer" 
+               Nº do IMO                      lon                      lat 
+             "character"                "numeric"                "numeric" 
+
+=== summary(Mes) ===
+ jan  fev  mar  abr  mai  jun  jul  ago  set  out  nov  dez 
+8163 8558 9363 9126 9068 9114 9666 9456 8581 8434 8365 8940 
+
+=== summary(Tipo de Operacao) ===
+        Abastecimento                 Apoio               Marinha 
+                  872                 22960                   157 
+Movimentação da Carga            Passageiro     Reparo/Manutenção 
+                75641                  6356                   712 
+ Retirada de Resíduos                   NAs 
+                   38                    98 
+
+=== summary(TOperacao) ===
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max.       NAs 
+  0.01667   2.31667   7.00000  19.10567  20.08333 730.00000     10424 
+
+=== CDTUP nao e numero (primeiros niveis) ===
+[1] "BR"      "BRAC001" "BRADR"   "BRAL001" "BRAM001" "BRAM003" "BRAM004"
+[8] "BRAM006"
+class_CDTUP=character
+class_IMO=character

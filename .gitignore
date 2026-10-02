@@ -1,0 +1,24 @@
+# Banco ANTAQ (~4,6 GB). Permanece só na máquina local; não sobe para o GitHub.
+estrutura/dataset/
+
+# Extração local dos PDFs (trabalho interno; não é entrega)
+_pdf_extract/
+
+# Intermediarios da compilacao knitr + LaTeX das entregas
+entregas/**/*.tex
+entregas/**/*.log
+entregas/**/*.aux
+entregas/**/*.bbl
+entregas/**/*.blg
+entregas/**/*.out
+entregas/**/figure/
+
+# Artefatos do R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Sistema
+Thumbs.db
+Desktop.ini
+.DS_Store

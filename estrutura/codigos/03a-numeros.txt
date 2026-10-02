@@ -1,0 +1,12 @@
+n=5681
+(Intercept)    log_peso 
+-0.05885751  0.35639702 
+R2_s=0.2617672
+(Intercept)    log_peso     log_teu 
+  0.2169865   0.3613714  -0.1087916 
+R2_m=0.5132514
+cor_peso_teu=0.01423832
+                         nome   peso_t     teu   T3_hat    T3_lwr    T3_upr
+     Granel mediano (sem TEU) 24283.46    0.00 46.74942 15.205242 139.69565
+25% Conteiner leve (P25 peso) 11361.98 2940.75 14.22017  4.164752  43.85279
+90%       Escala pesada (P90) 66395.65 3003.00 27.73934  8.751408  83.70056
