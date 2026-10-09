@@ -78,7 +78,8 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 │       ├── 04-regressao-logistica.R
 │       ├── 05-avaliacao-selecao-modelos.R
 │       ├── 06-metodos-reamostragem.R
-│       └── 07-expansao-regularizacao.R
+│       ├── 07-expansao-regularizacao.R
+│       └── 08-metodos-suavizacao.R
 ├── consolidados/                 # todas as entregas .md
 │   ├── 01-dicionario-variaveis.md
 │   ├── 02a-analise-exploratoria-ampla.md
@@ -89,6 +90,7 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 │   ├── 05-avaliacao-selecao-modelos.md
 │   ├── 06-metodos-reamostragem.md
 │   ├── 07-expansao-regularizacao.md
+│   ├── 08-metodos-suavizacao.md
 │   └── graficos/
 ├── entregas/                     # tudo das entregas avaliadas
 │   └── entrega-1/
@@ -128,8 +130,9 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 | 05 | [05-avaliacao-selecao-modelos.md](consolidados/05-avaliacao-selecao-modelos.md) | `05-avaliacao-selecao-modelos.R` | Aula 06 |
 | 06 | [06-metodos-reamostragem.md](consolidados/06-metodos-reamostragem.md) | `06-metodos-reamostragem.R` | Aula 07 |
 | 07 | [07-expansao-regularizacao.md](consolidados/07-expansao-regularizacao.md) | `07-expansao-regularizacao.R` | Aula 08 |
+| 08 | [08-metodos-suavizacao.md](consolidados/08-metodos-suavizacao.md) | `08-metodos-suavizacao.R` | Aula 09 |
 
-Funil: dicionário → Análise Exploratória → T3 → escolha → CV/bootstrap → expansão e regularização.
+Funil: dicionário → Análise Exploratória → T3 → escolha → CV/bootstrap → expansão e regularização → suavização.
 
 ### Entregas avaliadas
 
@@ -155,6 +158,7 @@ Rscript estrutura/codigos/04-regressao-logistica.R
 Rscript estrutura/codigos/05-avaliacao-selecao-modelos.R
 Rscript estrutura/codigos/06-metodos-reamostragem.R
 Rscript estrutura/codigos/07-expansao-regularizacao.R
+Rscript estrutura/codigos/08-metodos-suavizacao.R
 ```
 
 Para compilar a Entrega 1 (precisa de knitr e de um LaTeX com abntex2; o TinyTeX instala o que faltar):
@@ -166,4 +170,4 @@ Rscript -e "knitr::knit2pdf('entrega-1-pergunta.Rnw', bib_engine = 'bibtex')"
 ```
 
 Os scripts leem `estrutura/dataset` e gravam PNGs em `consolidados/graficos/`.
-O nome casa em tudo: `07-expansao-regularizacao.R`, `07-expansao-regularizacao.md` e `07-numeros.txt` (o mesmo vale para 01-07).
+O nome casa em tudo: `08-metodos-suavizacao.R`, `08-metodos-suavizacao.md` e `08-numeros.txt` (o mesmo vale para 01-08).
