@@ -79,7 +79,8 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 │       ├── 05-avaliacao-selecao-modelos.R
 │       ├── 06-metodos-reamostragem.R
 │       ├── 07-expansao-regularizacao.R
-│       └── 08-metodos-suavizacao.R
+│       ├── 08-metodos-suavizacao.R
+│       └── 09-splines-modelos-aditivos.R
 ├── consolidados/                 # todas as entregas .md
 │   ├── 01-dicionario-variaveis.md
 │   ├── 02a-analise-exploratoria-ampla.md
@@ -91,6 +92,7 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 │   ├── 06-metodos-reamostragem.md
 │   ├── 07-expansao-regularizacao.md
 │   ├── 08-metodos-suavizacao.md
+│   ├── 09-splines-modelos-aditivos.md
 │   └── graficos/
 ├── entregas/                     # tudo das entregas avaliadas
 │   └── entrega-1/
@@ -131,8 +133,9 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 | 06 | [06-metodos-reamostragem.md](consolidados/06-metodos-reamostragem.md) | `06-metodos-reamostragem.R` | Aula 07 |
 | 07 | [07-expansao-regularizacao.md](consolidados/07-expansao-regularizacao.md) | `07-expansao-regularizacao.R` | Aula 08 |
 | 08 | [08-metodos-suavizacao.md](consolidados/08-metodos-suavizacao.md) | `08-metodos-suavizacao.R` | Aula 09 |
+| 09 | [09-splines-modelos-aditivos.md](consolidados/09-splines-modelos-aditivos.md) | `09-splines-modelos-aditivos.R` | Aula 10 |
 
-Funil: dicionário → Análise Exploratória → T3 → escolha → CV/bootstrap → expansão e regularização → suavização.
+Funil: dicionário → Análise Exploratória → T3 → escolha → CV/bootstrap → expansão e regularização → suavização → splines / GAM.
 
 ### Entregas avaliadas
 
@@ -159,6 +162,7 @@ Rscript estrutura/codigos/05-avaliacao-selecao-modelos.R
 Rscript estrutura/codigos/06-metodos-reamostragem.R
 Rscript estrutura/codigos/07-expansao-regularizacao.R
 Rscript estrutura/codigos/08-metodos-suavizacao.R
+Rscript estrutura/codigos/09-splines-modelos-aditivos.R
 ```
 
 Para compilar a Entrega 1 (precisa de knitr e de um LaTeX com abntex2; o TinyTeX instala o que faltar):
@@ -170,4 +174,4 @@ Rscript -e "knitr::knit2pdf('entrega-1-pergunta.Rnw', bib_engine = 'bibtex')"
 ```
 
 Os scripts leem `estrutura/dataset` e gravam PNGs em `consolidados/graficos/`.
-O nome casa em tudo: `08-metodos-suavizacao.R`, `08-metodos-suavizacao.md` e `08-numeros.txt` (o mesmo vale para 01-08).
+O nome casa em tudo: `09-splines-modelos-aditivos.R`, `09-splines-modelos-aditivos.md` e `09-numeros.txt` (o mesmo vale para 01-09).

@@ -1,0 +1,37 @@
+n=5681
+
+=== CV(5) placar ===
+cv.base=0.6241
+cv.reta1=0.4609
+cv.mqo=0.3019
+cv.ns por df (ns(x1)+x2+x3):
+     2      3      4      5      6      7      8 
+0.3006 0.3000 0.2990 0.2989 0.2987 0.2989 0.2993 
+df.best=6 cv.ns.best=0.2987
+cv.ss=0.4539 df.ss=47.41
+cv.gam=0.2669
+
+=== CV(5) ns so x1 ===
+     2      3      4      5      6      7      8 
+0.4583 0.4521 0.4510 0.4506 0.4505 0.4493 0.4496 
+df1.best=7
+
+=== edf do GAM ===
+s(x1).peso  s(x2).teu s(x3).part 
+      3.77       6.56       8.63 
+
+=== RMSE horas (CV) ===
+rmse.base=34.49
+rmse.mqo=26.57
+rmse.ns=26.35
+rmse.gam=25.49
+
+=== exercicios ===
+ex2 f(40,50,60,100)= 180 200 250 370 
+ex3 pedagios g1,g2,g3 = 0, 4, 12
+ex3 criterio:
+  lam=0.1 lam=1 lam=10
+A    52.0    52     52
+B    30.4    34     70
+C    15.0    42    312
+ex4 yhat=406 yhat.2km=335 delta=-71
