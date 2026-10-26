@@ -1,0 +1,31 @@
+n.atrac.bruto=106834
+n.escalas.santos.mc=5843
+n.linhas.cont=48
+zeros=8
+summary n:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     5.0    41.0   121.7   154.2   441.0 
+navegacoes:
+
+Apoio Portuário       Cabotagem     Longo Curso          Outras 
+             12              12              12              12 
+
+=== M8 Poisson ===
+phi=0.82
+familia=poisson
+exp(coef) razoes de taxas:
+         (Intercept)               mesfev               mesmar 
+              10.536                0.993                1.099 
+              mesabr               mesmai               mesjun 
+               1.018                1.092                1.086 
+              mesjul               mesago               messet 
+               1.116                1.075                1.149 
+              mesout               mesnov               mesdez 
+               1.123                1.066                0.998 
+  navegacaoCabotagem navegacaoLongo Curso      navegacaoOutras 
+               6.407               35.837                0.037 
+
+=== M9 CV(5) RMSE ===
+rmse.base=167.698
+rmse.mqo=15.404
+rmse.pois=18.338

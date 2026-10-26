@@ -62,7 +62,7 @@ estimar \(f\), tipar dados, explorar, regressão linear e regressão logística.
 
 ## Estrutura do repositório
 
-Mesmo padrão do Projeto Integrador III (mesmo professor).
+Mesmo padrão do Projeto Integrador III (mesmo professor e equipe).
 
 ```
 .
@@ -71,71 +71,57 @@ Mesmo padrão do Projeto Integrador III (mesmo professor).
 │   ├── dataset/                  # ANTAQ local - fora do Git
 │   └── codigos/                  # todos os scripts .R
 │       ├── 01-dicionario-variaveis.R
-│       ├── 02a-analise-exploratoria-ampla.R
-│       ├── 02b-analise-exploratoria-segmentada.R
-│       ├── 03a-regressao-linear-t3.R
-│       ├── 03b-previsao-fila-t3.R
-│       ├── 04-regressao-logistica.R
-│       ├── 05-avaliacao-selecao-modelos.R
-│       ├── 06-metodos-reamostragem.R
-│       ├── 07-expansao-regularizacao.R
-│       ├── 08-metodos-suavizacao.R
-│       └── 09-splines-modelos-aditivos.R
-├── consolidados/                 # todas as entregas .md
+│       ├── ...
+│       ├── 09-splines-modelos-aditivos.R
+│       └── aula05b-poisson.R     # Parte D da tutora (Poisson)
+├── consolidados-aulas/           # relatórios técnicos das atividades
 │   ├── 01-dicionario-variaveis.md
-│   ├── 02a-analise-exploratoria-ampla.md
-│   ├── 02b-analise-exploratoria-segmentada.md
-│   ├── 03a-regressao-linear-t3.md
-│   ├── 03b-previsao-fila-t3.md
-│   ├── 04-regressao-logistica.md
-│   ├── 05-avaliacao-selecao-modelos.md
-│   ├── 06-metodos-reamostragem.md
-│   ├── 07-expansao-regularizacao.md
-│   ├── 08-metodos-suavizacao.md
+│   ├── ...
 │   ├── 09-splines-modelos-aditivos.md
 │   └── graficos/
+├── consolidados-tutora/          # diários Colab (teoria + Parte D)
+│   ├── aula05b_consolidado.md
+│   └── aula05b_parteD_consolidado.md
+├── materiais-tutora/             # GUIA_ESTUDO_*.md
 ├── entregas/                     # tudo das entregas avaliadas
 │   └── entrega-1/
-│       ├── entrega-1-pergunta.pdf      # documento entregue
-│       ├── entrega-1-pergunta.Rnw      # fonte (knitr + abnTeX2)
-│       ├── entrega-1-pergunta.R        # gera os dados e numeros do texto
-│       ├── entrega-1-escalas.csv       # recorte por escala
-│       ├── entrega-1-resultados.csv    # CV(5) das duas perguntas
-│       ├── entrega-1-numeros.txt
-│       ├── referencias.bib
-│       └── modelo-professor/           # enunciado e modelo .Rnw do professor
 ├── materiais-aulas/              # PDFs das aulas
-└── to-delete-trash/              # pasta antiga Atividades/ (lixo)
+└── to-delete-trash/              # layout antigo
 ```
 
 | Pasta | Conteúdo |
 |---|---|
 | `estrutura/dataset` | Microdados ANTAQ (local, fora do Git) |
-| `estrutura/codigos` | Códigos R das atividades |
-| `consolidados` | Relatórios das atividades em Markdown |
-| `entregas` | Tudo das entregas avaliadas (PDF, .Rnw, código, dados) e modelos do professor |
+| `estrutura/codigos` | Códigos R das atividades e da Parte D da tutora |
+| `consolidados-aulas` | Relatórios técnicos das atividades (grupo) |
+| `consolidados-tutora` | Diários Colab: teoria (Danilo) + Parte D (grupo) |
+| `materiais-tutora` | Guias `GUIA_ESTUDO_*.md` |
+| `entregas` | Entregas avaliadas (PDF, .Rnw, código, dados) e modelos do professor |
 | `materiais-aulas` | Slides/PDFs |
 | `to-delete-trash` | Layout antigo - pode apagar depois de conferir |
 
 ---
 
-## Atividades × aulas
+## Atividades × Aulas
 
-| # | Entrega | Script | Aula |
-|---|---|---|---|
-| 01 | [01-dicionario-variaveis.md](consolidados/01-dicionario-variaveis.md) | `01-dicionario-variaveis.R` | Aula 02 |
-| 02a | [02a-analise-exploratoria-ampla.md](consolidados/02a-analise-exploratoria-ampla.md) | `02a-analise-exploratoria-ampla.R` | Aula 03 |
-| 02b | [02b-analise-exploratoria-segmentada.md](consolidados/02b-analise-exploratoria-segmentada.md) | `02b-analise-exploratoria-segmentada.R` | Aula 03 |
-| 03a | [03a-regressao-linear-t3.md](consolidados/03a-regressao-linear-t3.md) | `03a-regressao-linear-t3.R` | Aula 04 |
-| 03b | [03b-previsao-fila-t3.md](consolidados/03b-previsao-fila-t3.md) | `03b-previsao-fila-t3.R` | Aula 04 |
-| 04 | [04-regressao-logistica.md](consolidados/04-regressao-logistica.md) | `04-regressao-logistica.R` | Aula 05 |
-| 05 | [05-avaliacao-selecao-modelos.md](consolidados/05-avaliacao-selecao-modelos.md) | `05-avaliacao-selecao-modelos.R` | Aula 06 |
-| 06 | [06-metodos-reamostragem.md](consolidados/06-metodos-reamostragem.md) | `06-metodos-reamostragem.R` | Aula 07 |
-| 07 | [07-expansao-regularizacao.md](consolidados/07-expansao-regularizacao.md) | `07-expansao-regularizacao.R` | Aula 08 |
-| 08 | [08-metodos-suavizacao.md](consolidados/08-metodos-suavizacao.md) | `08-metodos-suavizacao.R` | Aula 09 |
-| 09 | [09-splines-modelos-aditivos.md](consolidados/09-splines-modelos-aditivos.md) | `09-splines-modelos-aditivos.R` | Aula 10 |
+| # | Entrega (atividade) | Script | Tutora (teoria) | Tutora (Parte D) | Aula |
+|---|---|---|---|---|---|
+| 01 | [01-dicionario-variaveis.md](consolidados-aulas/01-dicionario-variaveis.md) | `01-dicionario-variaveis.R` | - | - | Aula 02 |
+| 02a | [02a-analise-exploratoria-ampla.md](consolidados-aulas/02a-analise-exploratoria-ampla.md) | `02a-analise-exploratoria-ampla.R` | - | - | Aula 03 |
+| 02b | [02b-analise-exploratoria-segmentada.md](consolidados-aulas/02b-analise-exploratoria-segmentada.md) | `02b-analise-exploratoria-segmentada.R` | - | - | Aula 03 |
+| 03a | [03a-regressao-linear-t3.md](consolidados-aulas/03a-regressao-linear-t3.md) | `03a-regressao-linear-t3.R` | - | - | Aula 04 |
+| 03b | [03b-previsao-fila-t3.md](consolidados-aulas/03b-previsao-fila-t3.md) | `03b-previsao-fila-t3.R` | - | - | Aula 04 |
+| 04 | [04-regressao-logistica.md](consolidados-aulas/04-regressao-logistica.md) | `04-regressao-logistica.R` | - | - | Aula 05 |
+| 05b | - | `aula05b-poisson.R` | [aula05b_consolidado.md](consolidados-tutora/aula05b_consolidado.md) | [aula05b_parteD_consolidado.md](consolidados-tutora/aula05b_parteD_consolidado.md) | Aula 05b |
+| 05 | [05-avaliacao-selecao-modelos.md](consolidados-aulas/05-avaliacao-selecao-modelos.md) | `05-avaliacao-selecao-modelos.R` | - | - | Aula 06 |
+| 06 | [06-metodos-reamostragem.md](consolidados-aulas/06-metodos-reamostragem.md) | `06-metodos-reamostragem.R` | - | - | Aula 07 |
+| 07 | [07-expansao-regularizacao.md](consolidados-aulas/07-expansao-regularizacao.md) | `07-expansao-regularizacao.R` | - | - | Aula 08 |
+| 08 | [08-metodos-suavizacao.md](consolidados-aulas/08-metodos-suavizacao.md) | `08-metodos-suavizacao.R` | - | - | Aula 09 |
+| 09 | [09-splines-modelos-aditivos.md](consolidados-aulas/09-splines-modelos-aditivos.md) | `09-splines-modelos-aditivos.R` | - | - | Aula 10 |
 
 Funil: dicionário → Análise Exploratória → T3 → escolha → CV/bootstrap → expansão e regularização → suavização → splines / GAM.
+
+Guias Colab: [`materiais-tutora/`](materiais-tutora/) · diários: [`consolidados-tutora/`](consolidados-tutora/) (teoria = Danilo Prado de Lima Silva; Parte D = Team Shannon).
 
 ### Entregas avaliadas
 
@@ -163,6 +149,7 @@ Rscript estrutura/codigos/06-metodos-reamostragem.R
 Rscript estrutura/codigos/07-expansao-regularizacao.R
 Rscript estrutura/codigos/08-metodos-suavizacao.R
 Rscript estrutura/codigos/09-splines-modelos-aditivos.R
+Rscript estrutura/codigos/aula05b-poisson.R
 ```
 
 Para compilar a Entrega 1 (precisa de knitr e de um LaTeX com abntex2; o TinyTeX instala o que faltar):
@@ -173,5 +160,6 @@ cd entregas/entrega-1
 Rscript -e "knitr::knit2pdf('entrega-1-pergunta.Rnw', bib_engine = 'bibtex')"
 ```
 
-Os scripts leem `estrutura/dataset` e gravam PNGs em `consolidados/graficos/`.
+Os scripts leem `estrutura/dataset` e gravam PNGs em `consolidados-aulas/graficos/`.
 O nome casa em tudo: `09-splines-modelos-aditivos.R`, `09-splines-modelos-aditivos.md` e `09-numeros.txt` (o mesmo vale para 01-09).
+Diários da tutora: `aula05b_consolidado.md` (teoria) e `aula05b_parteD_consolidado.md` (grupo).
