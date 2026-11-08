@@ -1,0 +1,26 @@
+n.full=5681 n.amostra=2000
+
+=== PCA ===
+var.exp= 0.6252 0.333 0.0418 
+cum.var= 0.6252 0.9582 1 
+rotation PC1 PC2:
+            PC1    PC2
+log.peso -0.043 -0.999
+log.teu  -0.706  0.049
+log.part -0.707  0.013
+
+=== silhueta ===
+     2      3      4      5      6      7      8 
+0.5592 0.5691 0.4973 0.4397 0.4451 0.4157 0.4416 
+K.best=3 S.max=0.5691
+W por K:
+[1] 2596.3 1424.1 1110.8  858.4  715.7  617.6  546.0
+
+=== centros ===
+  grupo  log.peso     log.teu log.part   n  y.medio            nome
+1     1  8.085111 0.818082961 1.527216 367 3.133011 intermediario-1
+2     2 10.551565 0.006015573 1.305809 866 3.991373       pouco-TEU
+3     3  9.915424 7.489869653 4.945567 767 2.996370       muito-TEU
+
+=== exercicios ===
+ex4 frac PC1=0.8 score=2.1213

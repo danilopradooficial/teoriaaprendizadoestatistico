@@ -1,0 +1,26 @@
+n=5681 p=7
+
+=== placar ===
+cv.base=0.6241
+cv.mqo=0.3019
+cv.gam=0.2669
+cv.arv=0.2282 cp.best=0.001323 folhas=50
+oob por mtry:
+     3      2      4      7 
+0.1818 0.1890 0.1842 0.1962 
+m.best=3 oob.best=0.1819
+
+=== primeira pergunta ===
+raiz=log.teu
+
+=== importancia top ===
+ log.peso  log.part navegacao   log.teu  terminal  natureza       mes 
+   123.05     42.34     41.61     39.95     36.59     21.44     14.48 
+
+=== exercicios ===
+ex1 rss 80,135,175: 14275 11950 9280 
+ex2 E,G,D: 0.25 0.375 0.8113 
+ex3 (1-1/n)^n n=10,1000: 0.3487 0.3677  fora media= 110.3 
+ex4 crit alpha=10: 910 340 320 
+ex4 crit alpha=50: 950 500 800 
+ex4 crit alpha=300: 1200 1500 3800 

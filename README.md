@@ -73,11 +73,15 @@ Mesmo padrão do Projeto Integrador III (mesmo professor e equipe).
 │       ├── 01-dicionario-variaveis.R
 │       ├── ...
 │       ├── 09-splines-modelos-aditivos.R
+│       ├── 10-arvores-random-forest.R
+│       ├── 11-agrupamento-pca.R
 │       └── aula05b-poisson.R     # Parte D da tutora (Poisson)
 ├── consolidados-aulas/           # relatórios técnicos das atividades
 │   ├── 01-dicionario-variaveis.md
 │   ├── ...
 │   ├── 09-splines-modelos-aditivos.md
+│   ├── 10-arvores-random-forest.md
+│   ├── 11-agrupamento-pca.md
 │   └── graficos/
 ├── consolidados-tutora/          # diários Colab (teoria + Parte D)
 │   ├── aula05b_consolidado.md
@@ -118,8 +122,10 @@ Mesmo padrão do Projeto Integrador III (mesmo professor e equipe).
 | 07 | [07-expansao-regularizacao.md](consolidados-aulas/07-expansao-regularizacao.md) | `07-expansao-regularizacao.R` | - | - | Aula 08 |
 | 08 | [08-metodos-suavizacao.md](consolidados-aulas/08-metodos-suavizacao.md) | `08-metodos-suavizacao.R` | - | - | Aula 09 |
 | 09 | [09-splines-modelos-aditivos.md](consolidados-aulas/09-splines-modelos-aditivos.md) | `09-splines-modelos-aditivos.R` | - | - | Aula 10 |
+| 10 | [10-arvores-random-forest.md](consolidados-aulas/10-arvores-random-forest.md) | `10-arvores-random-forest.R` | - | - | Aula 11 |
+| 11 | [11-agrupamento-pca.md](consolidados-aulas/11-agrupamento-pca.md) | `11-agrupamento-pca.R` | - | - | Aula 12 |
 
-Funil: dicionário → Análise Exploratória → T3 → escolha → CV/bootstrap → expansão e regularização → suavização → splines / GAM.
+Funil: dicionário → Análise Exploratória → T3 → escolha → CV/bootstrap → expansão e regularização → suavização → splines / GAM → árvores / RF → agrupamento / PCA.
 
 Guias Colab: [`materiais-tutora/`](materiais-tutora/) · diários: [`consolidados-tutora/`](consolidados-tutora/) (teoria = Danilo Prado de Lima Silva; Parte D = Team Shannon).
 
@@ -149,6 +155,8 @@ Rscript estrutura/codigos/06-metodos-reamostragem.R
 Rscript estrutura/codigos/07-expansao-regularizacao.R
 Rscript estrutura/codigos/08-metodos-suavizacao.R
 Rscript estrutura/codigos/09-splines-modelos-aditivos.R
+Rscript estrutura/codigos/10-arvores-random-forest.R
+Rscript estrutura/codigos/11-agrupamento-pca.R
 Rscript estrutura/codigos/aula05b-poisson.R
 ```
 
@@ -161,5 +169,5 @@ Rscript -e "knitr::knit2pdf('entrega-1-pergunta.Rnw', bib_engine = 'bibtex')"
 ```
 
 Os scripts leem `estrutura/dataset` e gravam PNGs em `consolidados-aulas/graficos/`.
-O nome casa em tudo: `09-splines-modelos-aditivos.R`, `09-splines-modelos-aditivos.md` e `09-numeros.txt` (o mesmo vale para 01-09).
+O nome casa em tudo: `11-agrupamento-pca.R`, `11-agrupamento-pca.md` e `11-numeros.txt` (o mesmo vale para 01-11).
 Diários da tutora: `aula05b_consolidado.md` (teoria) e `aula05b_parteD_consolidado.md` (grupo).
