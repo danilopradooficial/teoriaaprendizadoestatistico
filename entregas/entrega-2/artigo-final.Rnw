@@ -1,0 +1,315 @@
+% ==========================================================
+% ARTIGO FINAL
+% Teoria do Aprendizado Estatístico — Ciência de Dados
+% Fatec Baixada Santista – Rubens Lara
+% Equipe Shannon
+% R + knitr + abnTeX2, como a Entrega 1
+% ==========================================================
+%
+% COMO COMPILAR
+%   1. Na raiz: Rscript entregas/entrega-2/entrega-2-banco.R
+%   2. Em entregas/entrega-2/:
+%      Rscript -e "knitr::knit2pdf('artigo-final.Rnw', bib_engine = 'bibtex')"
+% ==========================================================
+
+\documentclass[
+  article,
+  12pt,
+  oneside,
+  a4paper,
+  english,
+  brazil
+]{abntex2}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{icomma}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[alf]{abntex2cite}
+
+\hypersetup{hidelinks}
+
+\newcommand{\aviso}[1]{\par\noindent\fcolorbox{red}{white}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+  \color{red}\small\textbf{Atenção:} #1}}\par\smallskip}
+
+% ----------------------------------------------------------
+% IDENTIFICAÇÃO
+% ----------------------------------------------------------
+\titulo{Previsão do tempo de operação no berço em Santos com floresta aleatória}
+\tituloestrangeiro{}
+\autor{Equipe Shannon}
+\local{Santos-SP}
+\data{\today}
+
+\newcommand{\nomecurso}{Tecnologia em Ciência de Dados}
+\newcommand{\nomedisciplina}{Teoria do Aprendizado Estatístico}
+\newcommand{\nomeprofessor}{Prof.\ Dr.\ João Paulo Ferreira de Mello}
+\newcommand{\repositorio}{teoriaaprendizadoestatistico}
+\newcommand{\integrantes}{%
+  Adriane da Costa Santos -- RA 0051352511040 \\
+  Danilo Prado de Lima Silva -- RA 0051352521019 \\
+  Victória Cabral Quintério -- RA 0051352521033%
+}
+
+\makeatletter
+\hypersetup{pdftitle={\@title}, pdfauthor={\@author}, pdflang={pt-BR}}
+\makeatother
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+library(knitr)
+opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, comment = "",
+               fig.align = "center", fig.width = 5, fig.height = 4.2,
+               out.width = "0.6\\linewidth")
+options(OutDec = ",", digits = 4)
+@
+
+<<modelo, include=FALSE, error=FALSE>>=
+# =========================================================================
+#  O MODELO -- troque somente este bloco
+# =========================================================================
+# Banco limpo (Santos 2024): entrega-2-banco.R
+# Resposta: log.t3 = log(1 + TOperacao), horas de operacao no berco
+# Preditores: peso, TEU, partidas (em log) + natureza, navegacao, terminal, mes
+# Modelo: floresta aleatoria (melhor placar do funil das aulas 09-11)
+
+dados    <- read.csv("entrega-2-escalas.csv")
+resposta <- "log.t3"
+fora     <- character(0)
+ajusta   <- function(d) {
+  set.seed(1)
+  randomForest::randomForest(log.t3 ~ ., data = d, mtry = 3, ntree = 500,
+                             importance = TRUE)
+}
+# =========================================================================
+@
+
+<<calculos, include=FALSE, error=FALSE>>=
+# ---- daqui para baixo, nada precisa ser trocado -------------------------
+tex <- function(x) {                       # texto vindo dos dados -> LaTeX
+  x <- gsub("\\\\", "\001", as.character(x))
+  x <- gsub("([&%$#_{}])", "\\\\\\1", x)
+  x <- gsub("~", "\\\\textasciitilde{}", x)
+  x <- gsub("\\^", "\\\\textasciicircum{}", x)
+  gsub("\001", "\\\\textbackslash{}", x)
+}
+
+# --- o banco do modelo -----------------------------------------------------
+if (!resposta %in% names(dados))
+  stop("A coluna '", resposta, "' nao esta no banco. Confira 'resposta' no bloco modelo.")
+fora_errada  <- setdiff(fora, names(dados))
+fora         <- intersect(fora, names(dados))
+usa_exemplo  <- identical(dados, iris)
+quantitativa <- is.numeric(dados[[resposta]]) && length(unique(na.omit(dados[[resposta]]))) > 2
+dm <- dados[, setdiff(names(dados), fora), drop = FALSE]
+dm[] <- lapply(dm, function(v) if (is.character(v) || is.logical(v)) factor(v) else v)
+if (!quantitativa) dm[[resposta]] <- factor(dm[[resposta]])
+dm <- na.omit(dm)
+
+# --- o modelo no banco inteiro ---------------------------------------------
+falha  <- NULL
+modelo <- tryCatch(ajusta(dm), error = function(e) { falha <<- conditionMessage(e); NULL })
+
+# --- o relatorio do modelo (item 4 do bloco modelo) ------------------------
+relatorio <- function(m) {
+  op <- options(OutDec = ".", width = 80)   # o relatorio sai como no console do R
+  on.exit(options(op))
+  if (is.null(m)) {
+    cat("O modelo nao rodou: veja o aviso no topo da primeira pagina.\n")
+  } else if (inherits(m, "randomForest")) {
+    print(m)
+    cat("Importancia dos preditores:\n"); print(round(randomForest::importance(m), 3))
+  } else if (inherits(m, "rpart")) {
+    print(m, digits = 3)
+  } else if (inherits(m, "cv.glmnet")) {
+    cat("lambda escolhido pela validacao cruzada:", signif(m$lambda.min, 3), "\n\n")
+    print(coef(m, s = "lambda.min"))
+  } else print(summary(m))
+}
+
+# --- os avisos do topo da primeira pagina ----------------------------------
+avisos <- paste(c(
+  if (usa_exemplo) "\\aviso{o bloco \\texttt{modelo} ainda usa o exemplo (\\texttt{iris}).}",
+  if (!is.null(falha)) paste0("\\aviso{o modelo n\\~ao rodou. Mensagem do R: \\texttt{", tex(falha), "}}"),
+  if (length(fora_errada) > 0) paste0("\\aviso{em \\texttt{fora} h\\'a colunas que n\\~ao est\\~ao no banco: ",
+                                     paste0("\\texttt{", tex(fora_errada), "}", collapse = ", "), ".}")),
+  collapse = "\n")
+@
+
+<<aux, include=FALSE>>=
+# numeros auxiliares para o texto (apos o modelo ajustado)
+n.obs  <- nrow(dm)
+p.pred <- ncol(dm) - 1
+oob.mse <- if (!is.null(modelo)) tail(modelo$mse, 1) else NA
+pct.var <- if (!is.null(modelo)) 100 * modelo$rsq[length(modelo$rsq)] else NA
+imp1 <- if (!is.null(modelo)) {
+  v <- randomForest::importance(modelo, type = 1)[, 1]
+  names(sort(v, decreasing = TRUE))[1]
+} else "NA"
+f1 <- function(x, d = 2) formatC(x, format = "f", digits = d, decimal.mark = ",", big.mark = ".")
+f0 <- function(x) formatC(x, format = "d", big.mark = ".")
+@
+
+\selectlanguage{brazil}
+\frenchspacing
+\SingleSpacing
+\setlength{\parskip}{0.12em}
+\setlength{\parindent}{1.25em}
+\setlength{\itemsep}{0pt plus 0pt}
+\setlength{\parsep}{0pt}
+\setlength{\topsep}{1pt}
+\setlength{\partopsep}{0pt}
+
+\begin{center}
+  \SingleSpacing
+  {\large\bfseries \imprimirtitulo\par}
+  \vspace{0.35em}
+  {\normalsize \imprimirautor\par}
+  \vspace{0.25em}
+  \small
+  Fatec Baixada Santista -- Rubens Lara \\
+  \nomecurso{} \quad|\quad \nomedisciplina{} \quad|\quad \nomeprofessor{} \\[0.2em]
+  {\footnotesize \integrantes} \\[0.2em]
+  Repositório: \texttt{\repositorio} \quad|\quad \imprimirlocal, \imprimirdata
+\end{center}
+
+\Sexpr{avisos}
+
+\begin{resumoumacoluna}
+\SingleSpacing\small
+Este artigo fecha o ciclo da Entrega~1: prever, na chegada ao Porto de Santos,
+quantas horas um navio vai operar no berço (T3). Depois de comparar reta, GAM e
+árvore no funil da disciplina, escolhemos uma floresta aleatória sobre
+$\log(1+\mathrm{T3})$, com preditores de carga e de contexto conhecidos antes
+da atracação. No banco limpo ($n=\Sexpr{f0(n.obs)}$), o erro OOB ficou em
+$\Sexpr{f1(oob.mse, 4)}$ e a importância liderada por \texttt{\Sexpr{imp1}}.
+
+\vspace{0.3em}
+\noindent\textbf{Palavras-chave}: floresta aleatória; tempo de operação; Porto de Santos; ANTAQ; aprendizado estatístico.
+\end{resumoumacoluna}
+
+\textual
+\SingleSpacing
+
+% ==========================================================================
+\section{Introdução}
+% ==========================================================================
+
+A programação de berços em Santos depende de uma estimativa do tempo de
+operação no cais. Na Entrega~1 a pergunta foi: quando o navio está programado
+para atracar, quantas horas ele vai operar? A resposta $Y$ é o T3
+(\texttt{TOperacao}) da ANTAQ \cite{antaq2025}. No funil das aulas subimos de
+MQO a GAM, árvore e floresta \cite{james2021,breiman2001}; este artigo documenta
+o \textbf{modelo final} --- a floresta.
+
+% ==========================================================================
+\section{Os dados}
+% ==========================================================================
+
+Usamos o ano de 2024, complexo \textbf{Santos}, tipo de operação
+\emph{movimentação da carga}, com peso bruto positivo e T3 até o percentil 99
+(cerca de 173~h), para cortar outliers extremos sem apagar a cauda operacional.
+O banco limpo tem $n=\Sexpr{f0(n.obs)}$ escalas e $p=\Sexpr{f0(p.pred)}$
+preditores.
+
+Entram no modelo apenas o que é conhecido na chegada: peso, TEU e número de
+partidas de carga (em $\log(1+x)$), natureza da carga predominante, tipo de
+navegação, terminal (dez mais frequentes e ``outros'') e mês. Ficam de fora
+identificadores e tempos que \emph{vazam} a resposta (fila T1/T2, estadia,
+duração calculada pelas datas de início e fim da operação), no mesmo critério
+da Entrega~1.
+
+% ==========================================================================
+\section{A pergunta e o modelo}
+% ==========================================================================
+
+\subsection{A pergunta}
+
+A tarefa é \textbf{regressão preditiva}: estimar T3 em horas. Trabalhamos na
+escala $\log(1+\mathrm{T3})$ para estabilizar a assimetria; o erro principal
+no ajuste é o MSE (e o OOB da floresta). Em horas, a linha de base (média) faz
+cerca de 34,5~h de RMSE e o MQO com os três preditores numéricos cerca de
+26,6~h, nas mesmas cinco dobras do funil.
+
+\subsection{O modelo escolhido}
+
+Escolhemos a \textbf{floresta aleatória} \cite{breiman2001} com
+\texttt{mtry}${}=3$, 500 árvores e importância por permutação. Motivos:
+
+\begin{itemize}
+  \item aceita fatores (\texttt{navegacao}, \texttt{terminal}, \ldots) sem
+        criar dummies à mão;
+  \item captura interações (perguntas que dependem do ramo) sem exigir
+        termos \texttt{ti()} do GAM;
+  \item o erro \textbf{out-of-bag} valida sem sortear um teste à parte;
+  \item no placar do funil, a floresta (OOB $\approx 0{,}182$) bateu árvore
+        podada ($\approx 0{,}228$), GAM ($\approx 0{,}267$) e MQO
+        ($\approx 0{,}302$).
+\end{itemize}
+
+A árvore única já ganhava do GAM, mas é instável; a floresta reduz essa
+variância ao médio de muitas árvores com sorteio de preditores em cada nó
+\cite{james2021}.
+
+% ==========================================================================
+\section{Resultados}
+% ==========================================================================
+
+O ajuste no banco inteiro devolve o relatório abaixo (console do R): número de
+árvores, $m$, erro OOB e importância.
+
+{\SingleSpacing\scriptsize
+<<relatorio>>=
+relatorio(modelo)
+@
+}
+
+Em síntese: MSE OOB $=\Sexpr{f1(oob.mse, 4)}$
+($\Sexpr{f1(pct.var, 1)}\%$ da variância explicada na escala log) e o preditor
+mais importante por permutação é \texttt{\Sexpr{imp1}}, seguido de navegação,
+terminal, partidas e TEU. A árvore isolada do funil abria em \texttt{log.teu};
+a floresta redistribui o crédito e sobe o peso bruto --- os dois sinais são
+compatíveis com a operação (granel versus contêiner).
+
+% ==========================================================================
+\section{Discussão}
+% ==========================================================================
+
+Três leituras práticas:
+
+\begin{enumerate}
+  \item \textbf{Ganho preditivo.} Em relação à média e ao MQO linear, a
+        floresta corta o erro de forma clara na escala em que treinamos. O
+        ganho sobre o GAM vem sobretudo dos fatores e das interações, não de
+        ``mais suavidade'' univariada.
+  \item \textbf{Importância não é causa.} Embaralhar \texttt{log.peso} piora
+        a previsão OOB; isso não prova que aumentar o peso cause mais T3, só
+        que o modelo usa essa coluna \cite{james2021}.
+  \item \textbf{Uso operacional.} A previsão serve como apoio à programação
+        (ordem de grandeza do berço), não como compromisso contratual: a
+        cauda de T3 continua larga e há informação que o banco não traz
+        (clima, greve, disponibilidade de equipamento).
+\end{enumerate}
+
+A Aula~12 apontou perfis (pouco-TEU / muito-TEU) com T3 médio distinto;
+segmentar a floresta por esse rótulo fica como próximo passo.
+
+% ==========================================================================
+\section{Conclusão}
+% ==========================================================================
+
+Para a pergunta das horas de operação no berço em Santos, levamos a floresta
+aleatória da ficha da Entrega~1: melhor placar do funil, importância alinhada
+ao porto e OOB embutido. O artigo fecha o ciclo mostrando \emph{como} prever,
+de forma reproduzível no repositório \texttt{\repositorio}.
+
+\postextual
+{\SingleSpacing\small
+\bibliography{referencias}
+}
+
+\end{document}

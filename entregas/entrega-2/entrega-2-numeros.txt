@@ -1,0 +1,11 @@
+n=5681 p=7
+q99.T3=172.9
+cv.base=0.6241
+cv.mqo=0.3019
+oob.rf=0.1817
+rmse.base.h=34.49
+rmse.mqo.h=26.57
+pct.var=70.9
+importancia:
+ log.peso navegacao  terminal  log.part   log.teu  natureza       mes 
+   120.25     61.19     47.72     44.66     40.22     23.28     10.25 

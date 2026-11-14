@@ -7,7 +7,7 @@ Estimar e avaliar modelos de aprendizado a partir de dados - da regressão
 **pseudocódigo** e implementação em **R**.
 
 ![R](https://img.shields.io/badge/R-base-276DC3?style=flat&logo=r&logoColor=white)
-![Status](https://img.shields.io/badge/status-em%20andamento-yellow)
+![Status](https://img.shields.io/badge/status-concluído-success)
 ![Equipe](https://img.shields.io/badge/equipe-Team%20Shannon-0B3954)
 ![Banco](https://img.shields.io/badge/banco-ANTAQ%20local-lightgrey)
 
@@ -55,8 +55,27 @@ O Dataset de Dados Estatístico Aquaviário (ANTAQ), recorte 2021-2025, está em
 | IV    | Redes neurais e SVM                               |
 | V     | Não supervisionado: agrupamento, EM, PCA/ICA      |
 
-As Aulas 01-05 abrem o **Bloco I** e o início do supervisionado:
-estimar \(f\), tipar dados, explorar, regressão linear e regressão logística.
+Neste repositório o funil entregue cobre os Blocos I–III e o início do V
+(até agrupamento/PCA na Aula 12). Redes neurais e SVM (Bloco IV) não entram
+nas atividades desta turma.
+
+---
+
+## Resultado do projeto
+
+**Pergunta:** quando um navio é programado para atracar em Santos, quantas horas
+ele vai operar no berço? (T3 = `TOperacao`)
+
+| Item | Valor |
+|---|---|
+| Recorte | Santos 2024, movimentação de carga, peso > 0, T3 ≤ P99 |
+| n | 5.681 escalas |
+| Entrega 1 | `lm` RMSE **23,7 h** vs média **32,8 h** |
+| Entrega 2 | floresta aleatória, OOB MSE ≈ **0,182** (escala log) |
+| Funil (MSE log) | base 0,624 → MQO 0,302 → GAM 0,267 → árvore 0,228 → **RF 0,182** |
+
+Apresentação final: [`entregas/apresentacao-final/apresentacao-final-shannon.pptx`](entregas/apresentacao-final/apresentacao-final-shannon.pptx)
+(gerar com `python entregas/apresentacao-final/gerar-apresentacao.py`).
 
 ---
 
@@ -88,7 +107,11 @@ Mesmo padrão do Projeto Integrador III (mesmo professor e equipe).
 │   └── aula05b_parteD_consolidado.md
 ├── materiais-tutora/             # GUIA_ESTUDO_*.md
 ├── entregas/                     # tudo das entregas avaliadas
-│   └── entrega-1/
+│   ├── entrega-1/
+│   ├── entrega-2/                # artigo final (RF)
+│   └── apresentacao-final/       # PPTX final + script gerador
+│       ├── gerar-apresentacao.py
+│       └── apresentacao-final-shannon.pptx
 ├── materiais-aulas/              # PDFs das aulas
 └── to-delete-trash/              # layout antigo
 ```
@@ -100,7 +123,8 @@ Mesmo padrão do Projeto Integrador III (mesmo professor e equipe).
 | `consolidados-aulas` | Relatórios técnicos das atividades (grupo) |
 | `consolidados-tutora` | Diários Colab: teoria (Danilo) + Parte D (grupo) |
 | `materiais-tutora` | Guias `GUIA_ESTUDO_*.md` |
-| `entregas` | Entregas avaliadas (PDF, .Rnw, código, dados) e modelos do professor |
+| `entregas` | Entregas avaliadas, artigo final e apresentação |
+| `entregas/apresentacao-final` | PPTX final do projeto + script gerador |
 | `materiais-aulas` | Slides/PDFs |
 | `to-delete-trash` | Layout antigo - pode apagar depois de conferir |
 
@@ -134,8 +158,10 @@ Guias Colab: [`materiais-tutora/`](materiais-tutora/) · diários: [`consolidado
 | Entrega | Documento | Script | Prazo |
 |---|---|---|---|
 | 1 - A pergunta | [entrega-1-pergunta.pdf](entregas/entrega-1/entrega-1-pergunta.pdf) ([.Rnw](entregas/entrega-1/entrega-1-pergunta.Rnw)) | [entrega-1-pergunta.R](entregas/entrega-1/entrega-1-pergunta.R) | 09/10 |
+| 2 - Artigo final | [artigo-final.pdf](entregas/entrega-2/artigo-final.pdf) ([.Rnw](entregas/entrega-2/artigo-final.Rnw)) | [entrega-2-banco.R](entregas/entrega-2/entrega-2-banco.R) | - |
+| Apresentação final | [apresentacao-final-shannon.pptx](entregas/apresentacao-final/apresentacao-final-shannon.pptx) | [gerar-apresentacao.py](entregas/apresentacao-final/gerar-apresentacao.py) | - |
 
-Pergunta escolhida: *quando um navio é programado para atracar em Santos, quantas horas ele vai operar no berço?* Regressão preditiva de T3, métrica RMSE em horas. Na CV(5), o `lm` faz 23,7 h contra 32,8 h da linha de base (média).
+Pergunta escolhida: *quando um navio é programado para atracar em Santos, quantas horas ele vai operar no berço?* Regressão preditiva de T3. Entrega 1: RMSE do `lm` 23,7 h contra 32,8 h da média. Entrega 2: floresta aleatória (OOB MSE ≈ 0,182 na escala log).
 
 ---
 
@@ -166,6 +192,14 @@ Para compilar a Entrega 1 (precisa de knitr e de um LaTeX com abntex2; o TinyTeX
 Rscript entregas/entrega-1/entrega-1-pergunta.R
 cd entregas/entrega-1
 Rscript -e "knitr::knit2pdf('entrega-1-pergunta.Rnw', bib_engine = 'bibtex')"
+```
+
+Para compilar a Entrega 2 (artigo final; pacote `randomForest`):
+
+```bash
+Rscript entregas/entrega-2/entrega-2-banco.R
+cd entregas/entrega-2
+Rscript -e "knitr::knit2pdf('artigo-final.Rnw', bib_engine = 'bibtex')"
 ```
 
 Os scripts leem `estrutura/dataset` e gravam PNGs em `consolidados-aulas/graficos/`.

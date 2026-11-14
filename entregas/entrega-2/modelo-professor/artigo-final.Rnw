@@ -1,0 +1,270 @@
+% ==========================================================
+% ARTIGO FINAL
+% Teoria do Aprendizado Estatístico — Ciência de Dados
+% Fatec Baixada Santista – Rubens Lara
+% R + knitr + abnTeX2, como a Entrega 1
+% ==========================================================
+%
+% COMO COMPILAR
+%   RStudio: Tools > Global Options > Sweave >
+%            "Weave Rnw files using: knitr" e "Typeset LaTeX into PDF using: pdfLaTeX".
+%            Depois, botão "Compile PDF".
+%   Terminal: Rscript -e "knitr::knit2pdf('artigo-final.Rnw')"
+%             (o knit2pdf usa o pacote tinytex: install.packages("tinytex"))
+%
+% REQUISITOS
+%   R com knitr e o pacote do modelo escolhido (mgcv, rpart, randomForest ou
+%   glmnet, se for o caso); LaTeX com abntex2 (TeX Live: texlive-publishers).
+%   Salve em UTF-8.
+%
+% O MODELO
+%   Tudo o que é do modelo fica no bloco "modelo", no início do documento:
+%   o banco, a resposta, as colunas fora do modelo e a função que ajusta o
+%   modelo. O documento ajusta o modelo e o guarda em "modelo"; para o
+%   relatório do modelo aparecer no texto, veja o item 4 do bloco.
+% ==========================================================
+
+\documentclass[
+  article,
+  12pt,
+  oneside,
+  a4paper,
+  english,
+  brazil
+]{abntex2}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{icomma}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[alf]{abntex2cite}
+
+\hypersetup{hidelinks}
+
+% Aviso vermelho no topo da primeira página quando o modelo não roda
+\newcommand{\aviso}[1]{\par\noindent\fcolorbox{red}{white}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+  \color{red}\small\textbf{Atenção:} #1}}\par\smallskip}
+
+% ----------------------------------------------------------
+% IDENTIFICAÇÃO
+% ----------------------------------------------------------
+\titulo{Título do artigo}
+\tituloestrangeiro{}
+\autor{Nome do grupo}
+\local{Santos-SP}
+\data{\today}
+
+\newcommand{\nomecurso}{Tecnologia em Ciência de Dados}
+\newcommand{\nomedisciplina}{Teoria do Aprendizado Estatístico}
+\newcommand{\nomeprofessor}{Prof.\ Dr.\ João Paulo Ferreira de Mello}
+\newcommand{\repositorio}{projeto-nome-do-grupo}
+\newcommand{\integrantes}{%
+  Nome Completo do Integrante 1 -- RA 0000000000000 \\
+  Nome Completo do Integrante 2 -- RA 0000000000000 \\
+  Nome Completo do Integrante 3 -- RA 0000000000000%
+}
+
+\makeatletter
+\hypersetup{pdftitle={\@title}, pdfauthor={\@author}, pdflang={pt-BR}}
+\makeatother
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+library(knitr)
+opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, comment = "",
+               fig.align = "center", fig.width = 5, fig.height = 4.2,
+               out.width = "0.6\\linewidth")
+options(OutDec = ",", digits = 4)
+@
+
+<<modelo, include=FALSE, error=FALSE>>=
+# =========================================================================
+#  O MODELO -- troque somente este bloco
+# =========================================================================
+# 1. O banco, ja limpo pelo codigo do grupo:
+# dados    <- read.csv("../estrutura/banco-de-dados/seu-banco.csv")
+#
+# 2. A resposta Y e as colunas que NAO entram no modelo (identificadores,
+#    colunas com vazamento):
+# resposta <- "nome_da_coluna_Y"
+# fora     <- c("id", "coluna_que_vaza")
+#
+#    O banco que chega ao modelo ja vem sem as colunas de 'fora', sem as
+#    linhas com faltantes e com as colunas de texto convertidas em factor.
+#    Uma resposta com duas classes vira factor: o modelo e de classificacao.
+#
+# 3. UM modelo, o que mais faz sentido para o problema. 'ajusta' recebe um
+#    banco (d) e devolve o modelo ajustado nele. Exemplos (troque y, x1, x2
+#    pelos nomes das colunas; y ~ . usa todos os preditores):
+#
+#    MQO        ajusta <- function(d) lm(y ~ x1 + x2, data = d)
+#    Logistica  ajusta <- function(d) glm(y ~ x1 + x2, family = binomial, data = d)
+#    Poisson    ajusta <- function(d) glm(y ~ x1 + x2, family = poisson, data = d)
+#    GAM        ajusta <- function(d) mgcv::gam(y ~ s(x1) + s(x2) + x3, data = d)
+#    Arvore     ajusta <- function(d) { set.seed(1)
+#                 a <- rpart::rpart(y ~ ., data = d, cp = 0.001)
+#                 rpart::prune(a, cp = a$cptable[which.min(a$cptable[, "xerror"]), "CP"]) }
+#    Floresta   ajusta <- function(d) { set.seed(1)
+#                 randomForest::randomForest(y ~ ., data = d, mtry = 2) }
+#    Lasso      ajusta <- function(d) { set.seed(1)
+#                 glmnet::cv.glmnet(model.matrix(y ~ ., d)[, -1], d$y) }
+#
+# 4. O documento ajusta o modelo no banco inteiro (dm) e guarda o ajuste em
+#    'modelo'. relatorio(modelo) imprime o relatorio, como no console do R:
+#    summary(modelo) para lm, glm e gam; print(modelo) para a arvore;
+#    print(modelo) e a importancia dos preditores para a floresta; o lambda
+#    e os coeficientes para o lasso. Para o relatorio aparecer no artigo,
+#    ponha no texto um bloco assim:
+#
+#        <<relatorio, size='footnotesize'>>=
+#        relatorio(modelo)
+#        @
+#
+# 5. O que o relatorio de cada modelo mostra:
+#    - lm: os coeficientes (a mudanca em Y por unidade de X, mantidos os
+#      outros preditores fixos), o erro padrao, o valor t e o p-valor de
+#      cada um; o erro padrao residual (na unidade de Y) e o R2;
+#    - glm logistico: os coeficientes em log das chances (exp(b) e a razao
+#      de chances); a deviance nula e a residual; o AIC;
+#    - glm de Poisson: os coeficientes em log da taxa (exp(b) e a razao de
+#      taxas); a deviance residual sobre os graus de liberdade (bem acima
+#      de 1: sobredispersao);
+#    - gam: o edf de cada termo (perto de 1, uma reta; maior, uma curva) e
+#      o p-valor; o R2 ajustado e a deviance explicada;
+#    - arvore: cada no, com a pergunta (o corte), o numero de observacoes,
+#      o erro (deviance) e a previsao; as folhas marcadas com *;
+#    - floresta: o numero de arvores, o m (variables tried at each split),
+#      o erro OOB e a % da variancia explicada (ou a matriz de confusao); a
+#      importancia de cada preditor;
+#    - lasso: o lambda escolhido pela validacao cruzada e os coeficientes
+#      que nao foram zerados.
+
+# Exemplo, ate o bloco ser trocado (o iris):
+dados    <- iris
+resposta <- "Sepal.Length"
+fora     <- character(0)
+ajusta   <- function(d) lm(Sepal.Length ~ ., data = d)
+# =========================================================================
+@
+
+<<calculos, include=FALSE, error=FALSE>>=
+# ---- daqui para baixo, nada precisa ser trocado -------------------------
+tex <- function(x) {                       # texto vindo dos dados -> LaTeX
+  x <- gsub("\\\\", "\001", as.character(x))
+  x <- gsub("([&%$#_{}])", "\\\\\\1", x)
+  x <- gsub("~", "\\\\textasciitilde{}", x)
+  x <- gsub("\\^", "\\\\textasciicircum{}", x)
+  gsub("\001", "\\\\textbackslash{}", x)
+}
+
+# --- o banco do modelo -----------------------------------------------------
+if (!resposta %in% names(dados))
+  stop("A coluna '", resposta, "' nao esta no banco. Confira 'resposta' no bloco modelo.")
+fora_errada  <- setdiff(fora, names(dados))
+fora         <- intersect(fora, names(dados))
+usa_exemplo  <- identical(dados, iris)
+quantitativa <- is.numeric(dados[[resposta]]) && length(unique(na.omit(dados[[resposta]]))) > 2
+dm <- dados[, setdiff(names(dados), fora), drop = FALSE]
+dm[] <- lapply(dm, function(v) if (is.character(v) || is.logical(v)) factor(v) else v)
+if (!quantitativa) dm[[resposta]] <- factor(dm[[resposta]])
+dm <- na.omit(dm)
+
+# --- o modelo no banco inteiro ---------------------------------------------
+falha  <- NULL
+modelo <- tryCatch(ajusta(dm), error = function(e) { falha <<- conditionMessage(e); NULL })
+
+# --- o relatorio do modelo (item 4 do bloco modelo) ------------------------
+relatorio <- function(m) {
+  op <- options(OutDec = ".", width = 80)   # o relatorio sai como no console do R
+  on.exit(options(op))
+  if (is.null(m)) {
+    cat("O modelo nao rodou: veja o aviso no topo da primeira pagina.\n")
+  } else if (inherits(m, "randomForest")) {
+    print(m)
+    cat("Importancia dos preditores:\n"); print(round(randomForest::importance(m), 3))
+  } else if (inherits(m, "rpart")) {
+    print(m, digits = 3)
+  } else if (inherits(m, "cv.glmnet")) {
+    cat("lambda escolhido pela validacao cruzada:", signif(m$lambda.min, 3), "\n\n")
+    print(coef(m, s = "lambda.min"))
+  } else print(summary(m))
+}
+
+# --- os avisos do topo da primeira pagina ----------------------------------
+avisos <- paste(c(
+  if (usa_exemplo) "\\aviso{o bloco \\texttt{modelo} ainda usa o exemplo (\\texttt{iris}).}",
+  if (!is.null(falha)) paste0("\\aviso{o modelo n\\~ao rodou. Mensagem do R: \\texttt{", tex(falha), "}}"),
+  if (length(fora_errada) > 0) paste0("\\aviso{em \\texttt{fora} h\\'a colunas que n\\~ao est\\~ao no banco: ",
+                                     paste0("\\texttt{", tex(fora_errada), "}", collapse = ", "), ".}")),
+  collapse = "\n")
+@
+
+\selectlanguage{brazil}
+\frenchspacing
+
+\begin{center}
+  {\Large\bfseries \imprimirtitulo\par}
+  \vspace{0.8em}
+  {\large \imprimirautor\par}
+  \vspace{0.6em}
+  \small
+  Fatec Baixada Santista -- Rubens Lara \\
+  \nomecurso{} \quad|\quad \nomedisciplina{} \\
+  \nomeprofessor{} \\[0.4em]
+  \integrantes \\[0.4em]
+  Repositório: \texttt{\repositorio} \quad|\quad \imprimirlocal, \imprimirdata
+\end{center}
+
+\Sexpr{avisos}
+
+\begin{resumoumacoluna}
+
+\vspace{\onelineskip}
+\noindent\textbf{Palavras-chave}:
+\end{resumoumacoluna}
+
+\textual
+
+% ==========================================================================
+\section{Introdução}
+% ==========================================================================
+
+
+% ==========================================================================
+\section{Os dados}
+% ==========================================================================
+
+
+% ==========================================================================
+\section{A pergunta e o modelo}
+% ==========================================================================
+
+\subsection{A pergunta}
+
+
+\subsection{O modelo escolhido}
+
+
+% ==========================================================================
+\section{Resultados}
+% ==========================================================================
+
+
+% ==========================================================================
+\section{Discussão}
+% ==========================================================================
+
+
+% ==========================================================================
+\section{Conclusão}
+% ==========================================================================
+
+
+\postextual
+\bibliography{referencias}
+
+\end{document}
